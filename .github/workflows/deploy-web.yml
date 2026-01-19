@@ -28,8 +28,7 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
-          channelId: live
-          projectId: newlife-church-app
+          projectId: kristianonochie-ea18d
 
       - name: Deployment summary
         run: echo "Web app deployed to Firebase Hosting!"
