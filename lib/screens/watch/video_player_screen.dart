@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:html' as html;
-import 'dart:ui_web' as ui_web;
+// Platform-conditional web helpers (web-only implementation selected on web)
+import 'video_player_web_helpers.dart'
+    if (dart.library.html) 'video_player_web_impl.dart' as web;
 import '../../theme/app_theme.dart';
 import '../../widgets/church_app_bar.dart';
 
@@ -91,23 +92,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   void _registerIframeView() {
     final embedUrl = _getYouTubeEmbedUrl(widget.videoUrl);
-    print('Registering iframe: $_iframeId with URL: $embedUrl'); // Debug log
-    
-    // Register iframe view for web platform with unique ID
-    // ignore: undefined_prefixed_name
-    ui_web.platformViewRegistry.registerViewFactory(
-      _iframeId,
-      (int viewId) {
-        final iframe = html.IFrameElement()
-          ..src = embedUrl
-          ..style.border = 'none'
-          ..style.width = '100%'
-          ..style.height = '100%'
-          ..allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-          ..allowFullscreen = true;
-        return iframe;
-      },
-    );
+    web.registerIframeView(_iframeId, embedUrl);
   }
 
   void _initWebView() {
@@ -157,73 +142,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   Widget _buildWebPlayer() {
-    return Container(
-      color: Colors.black,
-      child: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 16),
-                  // Video Title
-                  Text(
-                    widget.videoTitle,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  // Embedded Video Player
-                  Container(
-                    height: 600,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: AppTheme.primaryColor, width: 2),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: HtmlElementView(viewType: _iframeId),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  // Back Button
-                  ElevatedButton.icon(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back),
-                    label: const Text('Back to Services'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primaryColor,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Alternative: Open in Facebook
-                  OutlinedButton.icon(
-                    onPressed: _openInFacebook,
-                    icon: const Icon(Icons.open_in_new),
-                    label: const Text('Open in Facebook App'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white),
-                      padding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return web.buildWebPlayerWidget(
+      context: context,
+      title: widget.videoTitle,
+      iframeId: _iframeId,
+      onBack: () => Navigator.of(context).pop(),
+      onOpenExternal: _openInFacebook,
     );
   }
 
