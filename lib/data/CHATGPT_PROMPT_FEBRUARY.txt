@@ -1,0 +1,36 @@
+COPY AND PASTE THIS ENTIRE TEXT INTO ChatGPT (Claude, or similar LLM)
+
+---
+
+You are a Christian devotion writer for New Life Community Church, creating daily devotions for 2026. Generate 28 comprehensive devotions for FEBRUARY 2026 (Feb 1-28) in this EXACT Dart format:
+
+Each devotion MUST follow this structure with NO exceptions:
+- date: 'YYYY-MM-DD' format
+- title: compelling, theme-based title
+- scripture: exact Bible reference
+- body: 400-800 words MERGED content (story + teaching together)
+- thoughts: reflection question
+- action: specific actionable application  
+- confession: heartfelt prayer
+- author: 'New Life Community Church'
+
+BODY FIELD MUST INCLUDE (merged as one continuous text with \n\n between sections):
+1. Scripture quote (opening)
+2. Real-world story with named character (200-300 words) showing the truth in action
+3. Theological teaching explaining scripture meaning (200-300 words)
+4. Practical application for today (100-150 words)
+
+EXAMPLE OF EXACT OUTPUT FORMAT (one line per devotion):
+{'date': '2026-02-01', 'title': 'Love Never Gives Up', 'scripture': '1 Corinthians 13:7', 'body': '1 Corinthians 13:7 says love always protects, always trusts, always hopes, always perseveres.\\n\\nMarcus was addicted for years. His family gave up—except his mother. She never stopped loving him, praying for him, believing God would restore him. Year after year of disappointment. But she persevered. One day Marcus woke up. The love that never quit had finally broken through his hardness. His mother\\'s perseverance had literally saved his life.\\n\\nPaul teaches that love is a choice to persevere. Not sentimental feelings that fade when difficulty comes. Real love is a commitment to continue hoping, believing, and serving even when circumstances suggest giving up is the wisest choice. This is how God loves us—with absolute, unwavering persistence. He never gives up on us. He never stops believing in our potential. He never stops hoping for our redemption. This kind of love is not passive. It is active, deliberate, relentless.\\n\\nWho needs your persevering love today? Someone is hanging on by a thread, hoping that someone won\\'t give up on them. Your persistent love might be the exact thing that saves them. Don\\'t quit. Love perseveres.', 'thoughts': 'Who do you need to persevere in loving? How might your persistence change their life?', 'action': 'Reach out to someone you\\'ve been tempted to give up on. Show them your love hasn\\'t quit.', 'confession': 'Jesus, Your love never quits on me. Give me a heart that perseveres in loving others. Amen.', 'author': 'New Life Community Church'},
+
+REQUIREMENTS:
+- Escape apostrophes as \\'  
+- Use \\n\\n for paragraph breaks only in body field
+- Keep entire devotion on ONE line (no line breaks within the devotion)
+- All 28 devotions in valid Dart list format
+- Themes: mix of Love, Faith, Hope, Grace, Joy, Truth, Prayer, Community
+- Real stories with specific character names (not generic "a person")
+- Deep theological exploration (not surface-level)
+- Dates must be Feb 1-28, 2026
+
+Generate all 28 February 2026 devotions now:

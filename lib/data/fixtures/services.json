@@ -1,0 +1,44 @@
+[
+  {
+    "id": "cctv",
+    "title": "CCTV",
+    "description": "High-quality CCTV systems for all environments.",
+    "icon": null
+  },
+  {
+    "id": "fire",
+    "title": "Fire Safety",
+    "description": "Comprehensive fire safety solutions.",
+    "icon": null
+  },
+  {
+    "id": "intruder",
+    "title": "Intruder Alarms",
+    "description": "Advanced intruder alarm systems for businesses and homes.",
+    "icon": null
+  },
+  {
+    "id": "access",
+    "title": "Access Control",
+    "description": "Secure access control for your premises.",
+    "icon": null
+  },
+  {
+    "id": "thermal",
+    "title": "Thermal CCTV",
+    "description": "Thermal imaging CCTV for enhanced security.",
+    "icon": null
+  },
+  {
+    "id": "rentals",
+    "title": "System Rentals",
+    "description": "Flexible security system rental options.",
+    "icon": null
+  },
+  {
+    "id": "cameratech",
+    "title": "Cameratech Electrical",
+    "description": "Specialist electrical services from Cameratech.",
+    "icon": null
+  }
+]
