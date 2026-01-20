@@ -45,5 +45,28 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Privacy purpose strings for APIs accessed by dependencies -->
+	<key>NSCameraUsageDescription</key>
+	<string>Camera access is used by the payment processing feature to scan payment cards and verify your identity securely.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access is used by video features within the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library access is used for uploading images within the app.</string>
+	<key>NSPhotoLibraryAddOnlyUsageDescription</key>
+	<string>Photo library access is used for saving images within the app.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location access helps us provide location-based services and improve your experience.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location access helps us provide location-based services and improve your experience.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Contact access is used to help you share church information with others.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Motion data is used to improve app performance and user experience.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Your data will be used to provide a better user experience and to help us improve the app.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth access is used for connecting to compatible devices.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth access is used for connecting to compatible devices.</string>
 </dict>
 </plist>
