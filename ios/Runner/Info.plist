@@ -62,8 +62,6 @@
 	<string>Contact access is used to help you share church information with others.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Motion data is used to improve app performance and user experience.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Your data will be used to provide a better user experience and to help us improve the app.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth access is used for connecting to compatible devices.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
