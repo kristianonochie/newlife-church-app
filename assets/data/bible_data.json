@@ -1,0 +1,18 @@
+{
+  "Genesis": {
+    "1": {
+      "1": "In the beginning God created the heavens and the earth.",
+      "2": "Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters."
+    },
+    "2": {
+      "1": "Thus the heavens and the earth were completed in all their vast array."
+    }
+  },
+  "Exodus": {
+    "20": {
+      "1": "And God spoke all these words:",
+      "2": "I am the Lord your God, who brought you out of Egypt, out of the land of slavery."
+    }
+  }
+  // ... (Add all books, chapters, and verses for a full dataset)
+}
