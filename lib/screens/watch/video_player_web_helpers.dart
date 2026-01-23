@@ -10,6 +10,8 @@ Widget buildWebPlayerWidget({
   required String iframeId,
   required VoidCallback onBack,
   required Future<void> Function() onOpenExternal,
+  bool hasError = false,
+  VoidCallback? onRetry,
 }) {
   // Fallback on non-web: simple message
   return Scaffold(

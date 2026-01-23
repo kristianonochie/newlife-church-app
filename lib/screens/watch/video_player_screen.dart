@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 // Platform-conditional web helpers (web-only implementation selected on web)
 import 'video_player_web_helpers.dart'
     if (dart.library.html) 'video_player_web_impl.dart' as web;
-import '../../theme/app_theme.dart';
+// import '../../theme/app_theme.dart'; // Unused import removed
 import '../../widgets/church_app_bar.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class VideoPlayerScreen extends StatefulWidget {
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late WebViewController _webViewController;
   bool _isLoading = true;
+  bool _hasError = false;
   bool _isNativePlatform = false;
   late final String _iframeId;
 
@@ -49,7 +50,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   /// Extract YouTube video ID from various URL formats
   String? _getYouTubeVideoId(String url) {
     // Format: https://www.youtube.com/watch?v=VIDEO_ID
-    final regExp1 = RegExp(r'(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)');
+    final regExp1 =
+        RegExp(r'(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)');
     final match1 = regExp1.firstMatch(url);
     if (match1 != null) return match1.group(1);
 
@@ -105,6 +107,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           onPageFinished: (String url) {
             setState(() {
               _isLoading = false;
+              _hasError = false;
+            });
+          },
+          onWebResourceError: (error) {
+            setState(() {
+              _isLoading = false;
+              _hasError = true;
             });
           },
         ),
@@ -120,16 +129,38 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         title: widget.videoTitle,
         showBackButton: true,
       ),
-      body: _isNativePlatform
-          ? _buildNativePlayer()
-          : _buildWebPlayer(),
+      body: _isNativePlatform ? _buildNativePlayer() : _buildWebPlayer(),
     );
   }
 
   Widget _buildNativePlayer() {
     return Stack(
       children: [
-        WebViewWidget(controller: _webViewController),
+        if (_hasError)
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error, color: Colors.red, size: 48),
+                const SizedBox(height: 16),
+                const Text('Failed to load video',
+                    style: TextStyle(color: Colors.white)),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isLoading = true;
+                      _hasError = false;
+                    });
+                    _initWebView();
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          )
+        else
+          WebViewWidget(controller: _webViewController),
         if (_isLoading)
           Container(
             color: Colors.black87,
@@ -148,6 +179,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       iframeId: _iframeId,
       onBack: () => Navigator.of(context).pop(),
       onOpenExternal: _openInFacebook,
+      hasError: _hasError,
+      onRetry: () {
+        setState(() {
+          _hasError = false;
+          _isLoading = true;
+        });
+        _registerIframeView();
+      },
     );
   }
 

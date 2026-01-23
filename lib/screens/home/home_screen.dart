@@ -6,7 +6,6 @@ import '../../providers/devotion_provider.dart';
 import '../../providers/bible_provider.dart';
 import '../../services/content_service.dart';
 import '../../services/analytics_service.dart';
-
 import '../../widgets/floating_chat_button.dart';
 import '../chat/chat_screen.dart';
 import '../../widgets/app_bottom_nav.dart';
@@ -67,26 +66,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _content['welcome_title'] ?? 'Welcome to New Life Community Church',
+                        _content['welcome_title'] ??
+                            'Welcome to New Life Community Church',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        _content['welcome_subtitle'] ?? 'A CHURCH WHO EXISTS TO LOVE GOD AND LOVE PEOPLE',
+                        _content['welcome_subtitle'] ??
+                            'A CHURCH WHO EXISTS TO LOVE GOD AND LOVE PEOPLE',
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: AppTheme.textSecondary,
                         ),
                       ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () => context.pushNamed('about'),
-                      child: const Text('Learn More About Us'),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => context.pushNamed('about'),
+                        child: const Text('Learn More About Us'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             const SizedBox(height: 24),
 
             // Daily Devotion
@@ -106,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: Text(
                                 'Daily Devotion',
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                             ),
                             Icon(Icons.favorite_border,
@@ -169,11 +171,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: Text(
                                 'Daily Bible Verse',
-                                style: Theme.of(context).textTheme.headlineSmall,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall,
                               ),
                             ),
-                            Icon(Icons.menu_book,
-                                color: AppTheme.primaryColor),
+                            Icon(Icons.menu_book, color: AppTheme.primaryColor),
                           ],
                         ),
                         const SizedBox(height: 12),

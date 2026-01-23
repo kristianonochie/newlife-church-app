@@ -26,21 +26,32 @@ class ChurchAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Church Logo
-          Image.asset(
-            'assets/images/newlife_logo.png',
-            height: 40,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              // Fallback to text if image fails to load
-              return const Text(
-                'NLC',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              );
-            },
+          // Church Logo with themed background
+          Container(
+            decoration: BoxDecoration(
+              color: AppTheme.primaryColor, // Match logo color
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(4),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/newlife_logo.png',
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  // Fallback to text if image fails to load
+                  return const Text(
+                    'NLC',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
           if (title != null) ...[
             const SizedBox(width: 12),

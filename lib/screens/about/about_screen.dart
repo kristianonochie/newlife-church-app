@@ -2,6 +2,7 @@ import '../../widgets/floating_chat_button.dart';
 import '../chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_bottom_nav.dart';
 import '../../widgets/app_drawer.dart';
@@ -18,6 +19,13 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  void _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
   final ContentService _contentService = ContentService();
   Map<String, dynamic> _content = {};
   bool _isLoading = true;
@@ -63,7 +71,8 @@ class _AboutScreenState extends State<AboutScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _content['church_name'] ?? 'New Life Community Church',
+                              _content['church_name'] ??
+                                  'New Life Community Church',
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                             const SizedBox(height: 8),
@@ -73,10 +82,14 @@ class _AboutScreenState extends State<AboutScreen> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              _content['description'] ?? 'A CHURCH WHO EXISTS TO LOVE GOD AND LOVE PEOPLE',
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontStyle: FontStyle.italic,
-                              ),
+                              _content['description'] ??
+                                  'A CHURCH WHO EXISTS TO LOVE GOD AND LOVE PEOPLE',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                  ),
                             ),
                           ],
                         ),
@@ -89,7 +102,8 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      _content['mission'] ?? 'To spread the love of God and serve our community.',
+                      _content['mission'] ??
+                          'To spread the love of God and serve our community.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: 24),
@@ -99,10 +113,12 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      _content['vision'] ?? 'A thriving community united in faith.',
+                      _content['vision'] ??
+                          'A thriving community united in faith.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    if (_content['pastor_name'] != null) ...[                      const SizedBox(height: 24),
+                    if (_content['pastor_name'] != null) ...[
+                      const SizedBox(height: 24),
                       Text(
                         'Leadership',
                         style: Theme.of(context).textTheme.headlineSmall,
@@ -113,57 +129,75 @@ class _AboutScreenState extends State<AboutScreen> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
-                const SizedBox(height: 24),
-                Text(
-                  'Service Times',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 12),
-                _ServiceTimeCard(
-                  day: 'Sunday',
-                  times: ['11:00 – 12:15 - Morning Celebration', '11:30 – 12:15 - Junior Church'],
-                ),
-                const SizedBox(height: 12),
-                _ServiceTimeCard(
-                  day: 'Monday',
-                  times: ['10:00 – 12:30 - HUB Cafe'],
-                ),
-                const SizedBox(height: 12),
-                _ServiceTimeCard(
-                  day: 'Tuesday',
-                  times: [
-                    '10:00 – 12:30 - HUB Cafe',
-                    '19:00 – 21:00 - Prayer and Bible Study'
-                  ],
-                ),
-                const SizedBox(height: 12),
-                _ServiceTimeCard(
-                  day: 'Wednesday',
-                  times: [
-                    '10:00 – 12:30 - HUB Cafe',
-                    '19:00 – 20:30 - Warrior Women (last Wednesday of the month)'
-                  ],
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Connect With Us',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _SocialIcon(icon: Icons.facebook, label: 'Facebook'),
-                    _SocialIcon(icon: Icons.camera_alt, label: 'Instagram'),
-                    _SocialIcon(icon: Icons.videocam, label: 'YouTube'),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () => context.pushNamed('contact'),
-                  icon: const Icon(Icons.phone),
-                  label: const Text('Get in Touch'),
-                ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Service Times',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 12),
+                    _ServiceTimeCard(
+                      day: 'Sunday',
+                      times: [
+                        '11:00 – 12:15 - Morning Celebration',
+                        '11:30 – 12:15 - Junior Church'
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    _ServiceTimeCard(
+                      day: 'Monday',
+                      times: ['10:00 – 12:30 - HUB Cafe'],
+                    ),
+                    const SizedBox(height: 12),
+                    _ServiceTimeCard(
+                      day: 'Tuesday',
+                      times: [
+                        '10:00 – 12:30 - HUB Cafe',
+                        '19:00 – 21:00 - Prayer and Bible Study'
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    _ServiceTimeCard(
+                      day: 'Wednesday',
+                      times: [
+                        '10:00 – 12:30 - HUB Cafe',
+                        '19:00 – 20:30 - Warrior Women (last Wednesday of the month)'
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Connect With Us',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _SocialIcon(
+                          icon: Icons.facebook,
+                          label: 'Facebook',
+                          onTap: () => _launchUrl(
+                              'https://www.facebook.com/newlifecommunitychurchton/'),
+                        ),
+                        _SocialIcon(
+                          icon: Icons.camera_alt,
+                          label: 'Instagram',
+                          onTap: () => _launchUrl(
+                              'https://www.instagram.com/newlifetonyrefail/'),
+                        ),
+                        _SocialIcon(
+                          icon: Icons.videocam,
+                          label: 'YouTube',
+                          onTap: () => _launchUrl(
+                              'https://www.youtube.com/@newlifecommunitychurchtony3427/videos'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: () => context.pushNamed('contact'),
+                      icon: const Icon(Icons.phone),
+                      label: const Text('Get in Touch'),
+                    ),
                     const SizedBox(height: 16),
                     const AppFooter(),
                   ],
@@ -211,15 +245,18 @@ class _ServiceTimeCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ...times.map((time) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Row(
-                children: [
-                  const Icon(Icons.schedule, size: 16, color: AppTheme.textSecondary),
-                  const SizedBox(width: 8),
-                  Expanded(child: Text(time, style: Theme.of(context).textTheme.bodySmall)),
-                ],
-              ),
-            )),
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.schedule,
+                          size: 16, color: AppTheme.textSecondary),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child: Text(time,
+                              style: Theme.of(context).textTheme.bodySmall)),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),
@@ -230,24 +267,28 @@ class _ServiceTimeCard extends StatelessWidget {
 class _SocialIcon extends StatelessWidget {
   final IconData icon;
   final String label;
+  final VoidCallback? onTap;
 
-  const _SocialIcon({required this.icon, required this.label});
+  const _SocialIcon({required this.icon, required this.label, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppTheme.primaryColor,
-            borderRadius: BorderRadius.circular(12),
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppTheme.primaryColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: Colors.white),
           ),
-          child: Icon(icon, color: Colors.white),
-        ),
-        const SizedBox(height: 4),
-        Text(label, style: Theme.of(context).textTheme.bodySmall),
-      ],
+          const SizedBox(height: 4),
+          Text(label, style: Theme.of(context).textTheme.bodySmall),
+        ],
+      ),
     );
   }
 }

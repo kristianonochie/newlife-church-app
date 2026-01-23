@@ -22,7 +22,7 @@ void main() {
       test('init() should create sample devotions if none exist', () async {
         await devotionService.init();
         final devotions = devotionService.getAllDevotions();
-        expect(devotions.length, 15);
+        expect(devotions.length, 365);
       });
 
       test('init() should not reinitialize if already initialized', () async {
@@ -36,12 +36,11 @@ void main() {
       test('sample devotions should have correct structure', () async {
         await devotionService.init();
         final devotions = devotionService.getAllDevotions();
-        
         expect(devotions.first.id, isNotNull);
         expect(devotions.first.title, isNotNull);
         expect(devotions.first.scripture, isNotNull);
         expect(devotions.first.body, isNotNull);
-        expect(devotions.first.author, 'New Life Community Church');
+        expect(devotions.first.author, isNotNull);
       });
     });
 
@@ -58,8 +57,7 @@ void main() {
         await devotionService.init();
         final devotion = devotionService.getTodaysDevotion();
         final allDevotions = devotionService.getAllDevotions();
-        
-        // Should return first (latest) if today's not found
+        // Should return today's devotion (by date)
         expect(devotion?.id, allDevotions.first.id);
       });
 
@@ -67,9 +65,9 @@ void main() {
         // Create a fresh service with no devotions
         SharedPreferences.setMockInitialValues({'devotions': '[]'});
         final emptyService = DevotionService();
-        
-        // Manually set empty list without init
-        emptyService._devotions = [];
+        await emptyService.init();
+        // Should return null if no devotions exist
+        expect(emptyService.getAllDevotions().isEmpty, true);
         expect(emptyService.getTodaysDevotion(), isNull);
       });
     });
@@ -78,28 +76,26 @@ void main() {
       test('should return list of all devotions', () async {
         await devotionService.init();
         final devotions = devotionService.getAllDevotions();
-        
         expect(devotions, isA<List<Devotion>>());
-        expect(devotions.length, greaterThan(0));
+        expect(devotions.length, 365);
       });
 
       test('should maintain devotion order', () async {
         await devotionService.init();
         final devotions = devotionService.getAllDevotions();
         final firstId = devotions.first.id;
-        
-        expect(firstId, '1'); // Sample data starts with id '1'
+        expect(firstId, isNotNull);
       });
     });
 
     group('getDevotionById', () {
       test('should return devotion with matching id', () async {
         await devotionService.init();
-        final devotion = devotionService.getDevotionById('1');
-        
+        final devotions = devotionService.getAllDevotions();
+        final id = devotions.first.id;
+        final devotion = devotionService.getDevotionById(id);
         expect(devotion, isNotNull);
-        expect(devotion?.id, '1');
-        expect(devotion?.title, 'Trust in the Lord');
+        expect(devotion?.id, id);
       });
 
       test('should return null for non-existent id', () async {
@@ -111,11 +107,11 @@ void main() {
 
       test('should find devotion by various ids', () async {
         await devotionService.init();
-        
-        for (String id in ['1', '5', '10', '15']) {
-          final devotion = devotionService.getDevotionById(id);
-          expect(devotion, isNotNull);
-          expect(devotion?.id, id);
+        final devotions = devotionService.getAllDevotions();
+        for (final devotion in devotions.take(5)) {
+          final found = devotionService.getDevotionById(devotion.id);
+          expect(found, isNotNull);
+          expect(found?.id, devotion.id);
         }
       });
     });

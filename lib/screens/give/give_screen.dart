@@ -1,3 +1,5 @@
+// ...existing code for GiveScreen restored...
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_bottom_nav.dart';
@@ -6,7 +8,9 @@ import '../../widgets/church_app_bar.dart';
 import '../../widgets/app_footer.dart';
 import '../../widgets/floating_chat_button.dart';
 import '../chat/chat_screen.dart';
-import '../../services/payment_service.dart';
+import 'package:url_launcher/url_launcher.dart';
+// import 'dart:ui' as ui; // Unused import removed
+// No need for PayPalDonateButton, revert to url_launcher for all platforms
 
 class GiveScreen extends StatefulWidget {
   const GiveScreen({super.key});
@@ -16,279 +20,35 @@ class GiveScreen extends StatefulWidget {
 }
 
 class _GiveScreenState extends State<GiveScreen> {
-  final PaymentService _paymentService = PaymentService();
-  bool _isProcessing = false;
+  // bool _isProcessing = false; // Unused field removed
 
-  void _showGivingDialog(BuildContext context, String givingType) {
-    final TextEditingController amountController = TextEditingController();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('$givingType - New Life Community Church'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                _getGivingDescription(givingType),
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Full Name',
-                  hintText: 'Enter your full name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email Address',
-                  hintText: 'Enter your email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: amountController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'Amount (£)',
-                  hintText: 'Enter amount to give',
-                  prefixText: '£ ',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: AppTheme.primaryColor.withOpacity(0.3),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.lock, size: 20, color: AppTheme.primaryColor),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Secure payment processing via Stripe. Your money goes directly to NLCC bank account.',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: _isProcessing
-                ? null
-                : () async {
-                    final name = nameController.text.trim();
-                    final email = emailController.text.trim();
-                    final amountStr = amountController.text.trim();
-
-                    if (name.isEmpty || email.isEmpty || amountStr.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please fill in all fields')),
-                      );
-                      return;
-                    }
-
-                    final amount = double.tryParse(amountStr);
-                    if (amount == null || amount <= 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter a valid amount')),
-                      );
-                      return;
-                    }
-
-                    Navigator.pop(context);
-                    await _processPayment(
-                      context,
-                      givingType: givingType,
-                      amount: amount,
-                      name: name,
-                      email: email,
-                    );
-                  },
-            child: _isProcessing
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Text('Pay Securely'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _processPayment(
-    BuildContext context, {
-    required String givingType,
-    required double amount,
-    required String name,
-    required String email,
-  }) async {
-    setState(() => _isProcessing = true);
-
-    try {
-      // Show loading dialog
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16),
-              Text('Processing your giving...'),
-            ],
-          ),
-        ),
-      );
-
-      // Step 1: Create payment intent on backend
-      final paymentIntentResult = await _paymentService.createPaymentIntent(
-        amount: amount,
-        currency: 'gbp',
-        givingType: givingType,
-        donorName: name,
-        donorEmail: email,
-      );
-
-      if (!mounted) return;
-
-      if (!paymentIntentResult['success']) {
-        Navigator.pop(context); // Close loading dialog
+  Future<void> _openPayPalDonation(
+      BuildContext context, String givingType) async {
+    final url =
+        'https://www.paypal.com/donate?hosted_button_id=V56HCXFE46U5E&custom=${Uri.encodeComponent(givingType)}';
+    final uri = Uri.parse(url);
+    if (kIsWeb) {
+      // On web, open in a new browser tab
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: ${paymentIntentResult['error']}'),
-            backgroundColor: Colors.red,
-          ),
+          const SnackBar(content: Text('Could not open PayPal.')),
         );
-        setState(() => _isProcessing = false);
-        return;
       }
-
-      final clientSecret = paymentIntentResult['client_secret'];
-      final paymentIntentId = paymentIntentResult['payment_intent_id'];
-
-      // Step 2: Initialize payment sheet
-      final initialized = await _paymentService.initializePaymentSheet(
-        paymentIntentClientSecret: clientSecret,
-        merchantDisplayName: 'New Life Community Church',
-        amount: amount.toString(),
-      );
-
-      if (!mounted) return;
-
-      if (!initialized) {
-        Navigator.pop(context); // Close loading dialog
+    } else {
+      // On mobile, open in-app webview
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.inAppWebView);
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to initialize payment. Please try again.'),
-            backgroundColor: Colors.red,
-          ),
+          const SnackBar(content: Text('Could not open PayPal.')),
         );
-        setState(() => _isProcessing = false);
-        return;
-      }
-
-      Navigator.pop(context); // Close loading dialog
-
-      // Step 3: Display payment sheet
-      final paymentResult = await _paymentService.displayPaymentSheet(
-        context: context,
-      );
-
-      if (!mounted) return;
-
-      if (paymentResult['cancelled'] == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Payment cancelled'),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        setState(() => _isProcessing = false);
-        return;
-      }
-
-      if (!paymentResult['success']) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Payment failed: ${paymentResult['error']}'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        setState(() => _isProcessing = false);
-        return;
-      }
-
-      // Step 4: Complete giving and send receipt
-      await _paymentService.completeGiving(
-        paymentIntentId: paymentIntentId,
-        amount: amount,
-        givingType: givingType,
-        donorEmail: email,
-      );
-
-      if (!mounted) return;
-
-      // Success!
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '✅ Thank you for your $givingType of £$amount! A receipt has been sent to $email.',
-          ),
-          backgroundColor: Colors.green,
-          duration: const Duration(seconds: 5),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isProcessing = false);
       }
     }
   }
+
+  // This screen has been removed for App Store compliance.
 
   String _getGivingDescription(String givingType) {
     switch (givingType) {
@@ -363,7 +123,29 @@ class _GiveScreenState extends State<GiveScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-
+              // Info text about PayPal redirection
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.orange.shade200),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.info_outline,
+                        color: Colors.orange, size: 20),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'You will be redirected to PayPal in your browser to complete your donation.',
+                        style: TextStyle(color: Colors.orange, fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               // Giving options grid
               GridView.count(
                 crossAxisCount: isMobile ? 1 : 2,
@@ -425,8 +207,10 @@ class _GiveScreenState extends State<GiveScreen> {
                     const SizedBox(height: 12),
                     _buildBulletPoint('Support ministry and outreach programs'),
                     _buildBulletPoint('Help those in crisis and need'),
-                    _buildBulletPoint('Invest in spiritual growth and discipleship'),
-                    _buildBulletPoint('Advance the mission of New Life Community Church'),
+                    _buildBulletPoint(
+                        'Invest in spiritual growth and discipleship'),
+                    _buildBulletPoint(
+                        'Advance the mission of New Life Community Church'),
                   ],
                 ),
               ),
@@ -499,7 +283,7 @@ class _GiveScreenState extends State<GiveScreen> {
     required Color color,
   }) {
     return GestureDetector(
-      onTap: () => _showGivingDialog(context, title),
+      onTap: () => _openPayPalDonation(context, title),
       child: Card(
         elevation: 4,
         child: Container(
@@ -551,12 +335,12 @@ class _GiveScreenState extends State<GiveScreen> {
                 ),
                 const SizedBox(height: 12),
                 ElevatedButton(
-                  onPressed: () => _showGivingDialog(context, title),
+                  onPressed: () => _openPayPalDonation(context, title),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Give Now'),
+                  child: const Text('Give via PayPal'),
                 ),
               ],
             ),

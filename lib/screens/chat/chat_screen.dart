@@ -11,7 +11,7 @@ class ChatScreen extends StatefulWidget {
   final String role;
   final String? userEmail;
   final bool sendTranscript;
-  
+
   const ChatScreen({
     super.key,
     required this.role,
@@ -42,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedName = prefs.getString('chat_user_name');
-      
+
       if (savedName != null && savedName.isNotEmpty) {
         // User has a saved session, restore it
         setState(() {
@@ -71,8 +71,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _showNameDialog() async {
-    final nameController = TextEditingController(text: _userName == 'Guest' ? '' : _userName);
-    
+    final nameController =
+        TextEditingController(text: _userName == 'Guest' ? '' : _userName);
+
     await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -82,7 +83,8 @@ class _ChatScreenState extends State<ChatScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Before we start, please tell us your name so we can personalize your chat experience.'),
+              const Text(
+                  'Before we start, please tell us your name so we can personalize your chat experience.'),
               const SizedBox(height: 16),
               TextField(
                 controller: nameController,
@@ -153,7 +155,8 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context) => AlertDialog(
         title: const Text('End Chat'),
         content: widget.sendTranscript && widget.userEmail != null
-            ? const Text('Are you sure you want to end this chat? A transcript will be sent to your email.')
+            ? const Text(
+                'Are you sure you want to end this chat? A transcript will be sent to your email.')
             : const Text('Are you sure you want to end this chat?'),
         actions: [
           TextButton(
@@ -171,7 +174,9 @@ class _ChatScreenState extends State<ChatScreen> {
     if (confirmed != true || !mounted) return;
 
     // Send email if option is enabled
-    if (widget.sendTranscript && widget.userEmail != null && widget.userEmail!.isNotEmpty) {
+    if (widget.sendTranscript &&
+        widget.userEmail != null &&
+        widget.userEmail!.isNotEmpty) {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -206,7 +211,8 @@ class _ChatScreenState extends State<ChatScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('⚠️ Could not send transcript. Please try again or contact us.'),
+              content: Text(
+                  '⚠️ Could not send transcript. Please try again or contact us.'),
               backgroundColor: Colors.orange,
               duration: Duration(seconds: 4),
             ),
@@ -239,7 +245,8 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           child: Row(
             children: [
-              Icon(Icons.chat_bubble_outline, color: Colors.grey.shade600, size: 20),
+              Icon(Icons.chat_bubble_outline,
+                  color: Colors.grey.shade600, size: 20),
               const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,7 +258,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   if (_userName != null)
                     Text(
                       'Chatting as: $_userName',
-                      style: TextStyle(color: AppTheme.primaryColor, fontSize: 12, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          color: AppTheme.primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500),
                     ),
                 ],
               ),
@@ -264,7 +274,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   icon: const Icon(Icons.person, size: 16),
                   label: const Text('Change Name'),
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   ),
                 ),
               const SizedBox(width: 8),
@@ -275,7 +286,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red.shade600,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 ),
               ),
             ],
@@ -289,17 +301,24 @@ class _ChatScreenState extends State<ChatScreen> {
               final msg = chat.messages[chat.messages.length - 1 - i];
               final isUserMessage = msg.senderId == 'me';
               return Container(
-                alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                alignment: isUserMessage
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Column(
-                  crossAxisAlignment: isUserMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  crossAxisAlignment: isUserMessage
+                      ? CrossAxisAlignment.end
+                      : CrossAxisAlignment.start,
                   children: [
                     Container(
                       constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width * 0.7,
                       ),
                       decoration: BoxDecoration(
-                        color: isUserMessage ? AppTheme.primaryColor : Colors.grey[300],
+                        color: isUserMessage
+                            ? AppTheme.primaryColor
+                            : Colors.grey[300],
                         borderRadius: BorderRadius.circular(12),
                       ),
                       padding: const EdgeInsets.all(12),
@@ -310,7 +329,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             isUserMessage ? (_userName ?? 'You') : 'NLCChat',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: isUserMessage ? Colors.white : Colors.black87,
+                              color:
+                                  isUserMessage ? Colors.white : Colors.black87,
                               fontSize: 12,
                             ),
                           ),
@@ -318,7 +338,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           Text(
                             msg.content,
                             style: TextStyle(
-                              color: isUserMessage ? Colors.white : Colors.black87,
+                              color:
+                                  isUserMessage ? Colors.white : Colors.black87,
                             ),
                           ),
                         ],
@@ -348,25 +369,46 @@ class _ChatScreenState extends State<ChatScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  onSubmitted: _submitting || !_nameCollected
+                      ? null
+                      : (value) async {
+                          if (value.trim().isEmpty) return;
+                          setState(() => _submitting = true);
+                          await chat.sendMessage(ChatMessage(
+                            id: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            senderId: 'me',
+                            role: _userName ?? 'User',
+                            content: value.trim(),
+                            timestamp: DateTime.now(),
+                            attachments: [],
+                            escalated: false,
+                          ));
+                          _controller.clear();
+                          setState(() => _submitting = false);
+                        },
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.send),
-                onPressed: _submitting || !_nameCollected ? null : () async {
-                  if (_controller.text.trim().isEmpty) return;
-                  setState(() => _submitting = true);
-                  await chat.sendMessage(ChatMessage(
-                    id: DateTime.now().millisecondsSinceEpoch.toString(),
-                    senderId: 'me',
-                    role: _userName ?? 'User',
-                    content: _controller.text.trim(),
-                    timestamp: DateTime.now(),
-                    attachments: [],
-                    escalated: false,
-                  ));
-                  _controller.clear();
-                  setState(() => _submitting = false);
-                },
+                onPressed: _submitting || !_nameCollected
+                    ? null
+                    : () async {
+                        if (_controller.text.trim().isEmpty) return;
+                        setState(() => _submitting = true);
+                        await chat.sendMessage(ChatMessage(
+                          id: DateTime.now().millisecondsSinceEpoch.toString(),
+                          senderId: 'me',
+                          role: _userName ?? 'User',
+                          content: _controller.text.trim(),
+                          timestamp: DateTime.now(),
+                          attachments: [],
+                          escalated: false,
+                        ));
+                        _controller.clear();
+                        setState(() => _submitting = false);
+                      },
               ),
               IconButton(
                 icon: const Icon(Icons.upload_file),

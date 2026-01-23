@@ -2,6 +2,11 @@ import 'package:flutter/foundation.dart';
 import '../services/bible_service.dart';
 
 class BibleProvider extends ChangeNotifier {
+  // Search the whole Bible for a query (not just a single verse reference)
+  Future<void> searchBible(String query, {BibleVersion? version}) async {
+    await searchVerses(query, version: version);
+  }
+
   final BibleService _bibleService;
 
   BibleVerse? _currentVerse;
@@ -54,8 +59,7 @@ class BibleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> searchVerse(String reference,
-      {BibleVersion? version}) async {
+  Future<void> searchVerse(String reference, {BibleVersion? version}) async {
     if (reference.isEmpty) return;
     _setLoading(true);
     _error = null;
@@ -65,7 +69,8 @@ class BibleProvider extends ChangeNotifier {
           version: version ?? _selectedVersion);
       if (verse == null) {
         _currentVerse = null;
-        _error = 'No verse found for "$reference". Try another reference like "John 3:16".';
+        _error =
+            'No verse found for "$reference". Try another reference like "John 3:16".';
       } else {
         _currentVerse = verse;
       }
@@ -77,13 +82,12 @@ class BibleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> searchVerses(String query,
-      {BibleVersion? version}) async {
+  Future<void> searchVerses(String query, {BibleVersion? version}) async {
     _setLoading(true);
     _error = null;
     _searchQuery = query;
     try {
-      final results = _bibleService.searchVerses(query,
+      final results = await _bibleService.searchVerses(query,
           version: version ?? _selectedVersion);
       _searchResults = List<BibleVerse>.from(results);
     } catch (e) {
@@ -94,15 +98,13 @@ class BibleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isFavorite(BibleVerse verse) =>
-      _favoriteVerses.any((v) =>
-          v.reference == verse.reference && v.version == verse.version);
+  bool isFavorite(BibleVerse verse) => _favoriteVerses
+      .any((v) => v.reference == verse.reference && v.version == verse.version);
 
   Future<void> toggleFavorite(BibleVerse verse) async {
     try {
       await _bibleService.toggleFavorite(verse);
-      _favoriteVerses =
-          List<BibleVerse>.from(_bibleService.getFavorites());
+      _favoriteVerses = List<BibleVerse>.from(_bibleService.getFavorites());
       _error = null;
     } catch (e) {
       _error = e.toString();
@@ -114,8 +116,8 @@ class BibleProvider extends ChangeNotifier {
     _setLoading(true);
     _error = null;
     try {
-      final verse = _bibleService.getRandomVerse(
-          version: version ?? _selectedVersion);
+      final verse =
+          _bibleService.getRandomVerse(version: version ?? _selectedVersion);
       _currentVerse = verse;
     } catch (e) {
       _error = e.toString();
@@ -128,8 +130,7 @@ class BibleProvider extends ChangeNotifier {
   Future<void> clearFavorites() async {
     try {
       await _bibleService.clearFavorites();
-      _favoriteVerses =
-          List<BibleVerse>.from(_bibleService.getFavorites());
+      _favoriteVerses = List<BibleVerse>.from(_bibleService.getFavorites());
       _error = null;
     } catch (e) {
       _error = e.toString();

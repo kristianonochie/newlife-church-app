@@ -1,4 +1,6 @@
 import '../../widgets/floating_chat_button.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,45 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_bottom_nav.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/church_app_bar.dart';
+
+import 'package:go_router/go_router.dart';
+
+// Quick Link Button Widget (must be visible to all widgets)
+class _QuickLinkButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _QuickLinkButton({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            backgroundColor: color,
+            radius: 20,
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class BibleScreen extends StatefulWidget {
   const BibleScreen({super.key});
@@ -96,6 +137,7 @@ class _SearchTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // ...removed quick search links grid...
               // Version Selector
               Card(
                 child: Padding(
@@ -113,13 +155,16 @@ class _SearchTab extends StatelessWidget {
                         value: bibleProvider.selectedVersion,
                         onChanged: (BibleVersion? newVersion) {
                           if (newVersion != null) {
-                            context.read<BibleProvider>().setSelectedVersion(newVersion);
+                            context
+                                .read<BibleProvider>()
+                                .setSelectedVersion(newVersion);
                           }
                         },
                         items: bibleProvider.availableVersions.map((version) {
                           return DropdownMenuItem<BibleVersion>(
                             value: version,
-                            child: Text('${version.abbreviation} - ${version.fullName}'),
+                            child: Text(
+                                '${version.abbreviation} - ${version.fullName}'),
                           );
                         }).toList(),
                       ),
@@ -131,7 +176,8 @@ class _SearchTab extends StatelessWidget {
               TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search (e.g., John 3:16)',
+                  hintText:
+                      'Search the whole Bible (e.g., faith, love, John 3:16)',
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -139,7 +185,10 @@ class _SearchTab extends StatelessWidget {
                 ),
                 onSubmitted: (value) {
                   if (value.isNotEmpty) {
-                    context.read<BibleProvider>().searchVerse(value, version: bibleProvider.selectedVersion);
+                    context.read<BibleProvider>().searchBible(
+                          value,
+                          version: bibleProvider.selectedVersion,
+                        );
                   }
                 },
               ),
@@ -147,13 +196,13 @@ class _SearchTab extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   if (searchController.text.isNotEmpty) {
-                    await context
-                        .read<BibleProvider>()
-                        .searchVerse(searchController.text,
-                            version: bibleProvider.selectedVersion);
+                    await context.read<BibleProvider>().searchBible(
+                          searchController.text,
+                          version: bibleProvider.selectedVersion,
+                        );
                   }
                 },
-                child: const Text('Search Verse'),
+                child: const Text('Search Bible'),
               ),
               const SizedBox(height: 24),
               if (bibleProvider.isLoading)
@@ -166,63 +215,41 @@ class _SearchTab extends StatelessWidget {
                     style: const TextStyle(color: AppTheme.errorColor),
                   ),
                 )
-              else if (bibleProvider.currentVerse != null) ...[
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    bibleProvider.currentVerse!.reference,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.primaryColor,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    bibleProvider.currentVerse!.version.abbreviation,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: AppTheme.textSecondary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                bibleProvider.isFavorite(
-                                  bibleProvider.currentVerse!,
-                                )
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: AppTheme.errorColor,
-                              ),
-                              onPressed: () {
-                                context
-                                    .read<BibleProvider>()
-                                    .toggleFavorite(bibleProvider.currentVerse!);
-                              },
-                            ),
-                          ],
+              else if (bibleProvider.searchResults.isNotEmpty) ...[
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: bibleProvider.searchResults.length,
+                  itemBuilder: (context, index) {
+                    final verse = bibleProvider.searchResults[index];
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: ListTile(
+                        title: Text(
+                          verse.referenceWithVersion,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.primaryColor,
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          bibleProvider.currentVerse!.text,
+                        subtitle: Text(
+                          verse.text,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ],
-                    ),
-                  ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            bibleProvider.isFavorite(verse)
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: AppTheme.errorColor,
+                          ),
+                          onPressed: () {
+                            context.read<BibleProvider>().toggleFavorite(verse);
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
               const SizedBox(height: 24),
@@ -232,6 +259,49 @@ class _SearchTab extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               _PopularVersesList(),
+              const SizedBox(height: 24),
+              // Quick Links Row (6 links, as on home page)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _QuickLinkButton(
+                    icon: Icons.favorite,
+                    label: 'Devotion',
+                    color: AppTheme.primaryColor,
+                    onTap: () => context.pushNamed('devotion'),
+                  ),
+                  _QuickLinkButton(
+                    icon: Icons.live_tv,
+                    label: 'TV',
+                    color: Color(0xFFE91E63),
+                    onTap: () => context.pushNamed('watch'),
+                  ),
+                  _QuickLinkButton(
+                    icon: Icons.calendar_today,
+                    label: 'Events',
+                    color: Color(0xFF9C27B0),
+                    onTap: () => context.pushNamed('events'),
+                  ),
+                  _QuickLinkButton(
+                    icon: Icons.volunteer_activism,
+                    label: 'Give',
+                    color: AppTheme.secondaryColor,
+                    onTap: () => context.pushNamed('give'),
+                  ),
+                  _QuickLinkButton(
+                    icon: Icons.groups,
+                    label: 'About',
+                    color: Color(0xFF00BCD4),
+                    onTap: () => context.pushNamed('about'),
+                  ),
+                  _QuickLinkButton(
+                    icon: Icons.menu_book,
+                    label: 'Bible',
+                    color: Color(0xFF4CAF50),
+                    onTap: () => context.pushNamed('bible'),
+                  ),
+                ],
+              ),
             ],
           ),
         );
@@ -315,6 +385,7 @@ class _PopularVersesList extends StatelessWidget {
     );
   }
 }
+
 class _InternetSearchTab extends StatefulWidget {
   const _InternetSearchTab();
 
@@ -333,15 +404,29 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
     super.dispose();
   }
 
+  Future<List<Map<String, String>>> searchNlccBackend(String query) async {
+    final url = Uri.parse('http://localhost:8000/search?query=${Uri.encodeComponent(query)}');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return List<Map<String, String>>.from(data['results']);
+      }
+    } catch (e) {
+      // Optionally handle error
+    }
+    return [];
+  }
+
   Future<void> _performSearch() async {
     if (_searchController.text.isEmpty) return;
-    
+
     setState(() {
       _isLoading = true;
     });
 
-    final results = await BibleService().searchInternet(_searchController.text);
-    
+    final results = await searchNlccBackend(_searchController.text);
+
     setState(() {
       _results = results;
       _isLoading = false;
@@ -353,21 +438,45 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: 'Search Bible topics on the internet...',
-              prefixIcon: const Icon(Icons.language),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: _performSearch,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              'NLCC Search',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: AppTheme.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-            onSubmitted: (_) => _performSearch(),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search the internet (e.g., faith, prayer, church history)...',
+                    prefixIcon: const Icon(Icons.language),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onSubmitted: (_) => _performSearch(),
+                ),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: _performSearch,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Icon(Icons.search),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           if (_isLoading)
@@ -377,7 +486,7 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
           else if (_results.isEmpty && _searchController.text.isNotEmpty)
             const Expanded(
               child: Center(
-                child: Text('No results found. Try a different search.'),
+                child: Text('No results found. Try a different search or broader keywords.'),
               ),
             )
           else if (_results.isEmpty)
@@ -389,11 +498,11 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
                     Icon(
                       Icons.language,
                       size: 64,
-                      color: Colors.grey[400],
+                      color: Colors.grey,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Search for Bible topics, studies,\ncommentaries, and more',
+                      'Use NLCC Search to find Bible topics, Christian resources, commentaries, and more.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey[600],
@@ -439,6 +548,12 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
                       ),
                       isThreeLine: true,
                       trailing: const Icon(Icons.open_in_new),
+                      onTap: () {
+                        if (result['url'] != null) {
+                          // Open the result in a new tab or browser
+                          // (You may want to use url_launcher for mobile)
+                        }
+                      },
                     ),
                   );
                 },

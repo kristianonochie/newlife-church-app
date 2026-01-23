@@ -10,10 +10,10 @@ import '../screens/contact/contact_screen.dart';
 import '../screens/notifications/notifications_screen.dart';
 import '../screens/nlcchat/nlcchat_screen.dart';
 import '../screens/prayer/prayer_screen.dart';
-import '../screens/give/give_screen.dart';
 import '../screens/admin/admin_login_screen.dart';
 import '../screens/admin/admin_dashboard_screen.dart';
 import '../screens/watch/watch_screen.dart';
+import '../screens/give/give_screen.dart';
 
 class AppRoutes {
   static final router = GoRouter(
@@ -33,6 +33,11 @@ class AppRoutes {
         path: '/events',
         name: 'events',
         builder: (context, state) => const EventsScreen(),
+      ),
+      GoRoute(
+        path: '/give',
+        name: 'give',
+        builder: (context, state) => const GiveScreen(),
       ),
       GoRoute(
         path: '/devotion',
@@ -71,11 +76,6 @@ class AppRoutes {
         path: '/prayer',
         name: 'prayer',
         builder: (context, state) => const PrayerScreen(),
-      ),
-      GoRoute(
-        path: '/give',
-        name: 'give',
-        builder: (context, state) => const GiveScreen(),
       ),
       GoRoute(
         path: '/watch',

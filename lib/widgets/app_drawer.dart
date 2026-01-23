@@ -27,40 +27,46 @@ class AppDrawer extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Image.asset(
-                  'assets/images/newlife_logo.png',
-                  height: 60,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.church,
-                      size: 48,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor, // Match logo color
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/newlife_logo.png',
+                        height: 56,
+                        width: 56,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'New Life Community Church',
+                    style: TextStyle(
                       color: Colors.white,
-                    );
-                  },
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'New Life Community Church',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Tonyrefail',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 14,
+                  const SizedBox(height: 2),
+                  Text(
+                    'Tonyrefail',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           _buildDrawerItem(
@@ -105,19 +111,19 @@ class AppDrawer extends StatelessWidget {
           ),
           _buildDrawerItem(
             context: context,
-            icon: Icons.volunteer_activism,
-            title: 'Give',
-            subtitle: 'Support & Giving',
-            route: 'give',
-            routePath: '/give',
-          ),
-          _buildDrawerItem(
-            context: context,
             icon: Icons.live_tv,
             title: 'TV',
             subtitle: 'Live & Past Sermons',
             route: 'watch',
             routePath: '/watch',
+          ),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.volunteer_activism,
+            title: 'Give',
+            subtitle: 'Support & Giving',
+            route: 'give',
+            routePath: '/give',
           ),
           _buildDrawerItem(
             context: context,

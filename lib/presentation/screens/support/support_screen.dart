@@ -4,7 +4,6 @@ import '../../providers/guide_provider.dart';
 import '../../../core/models/guide.dart';
 import '../../widgets/app_bottom_nav.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:go_router/go_router.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});

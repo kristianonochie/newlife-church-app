@@ -2,20 +2,51 @@ import 'package:dio/dio.dart';
 import '../models/chat_message.dart';
 
 class EmailService {
+  static const String _contactTemplateId =
+      'template_zj85mza'; // Contact Us Template ID
+  /// Send contact message via EmailJS
+  Future<bool> sendContactMessage({
+    required String fromName,
+    required String fromEmail,
+    required String message,
+  }) async {
+    try {
+      final response = await _dio.post(
+        'https://api.emailjs.com/api/v1.0/email/send',
+        data: {
+          'service_id': _serviceId,
+          'template_id': _contactTemplateId,
+          'user_id': _publicKey,
+          'template_params': {
+            'from_name': fromName,
+            'from_email': fromEmail,
+            'message': message,
+          },
+        },
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Error sending contact message: $e');
+      return false;
+    }
+  }
+
   final Dio _dio = Dio();
-  
+
   // EmailJS Configuration
-  // To set up: 
+  // To set up:
   // 1. Go to https://www.emailjs.com/ and create free account
   // 2. Create email service (Gmail, Outlook, etc.)
   // 3. Create email templates
   // 4. Replace these values with your actual EmailJS credentials
-  static const String _serviceId = 'service_nlcc';  // Replace with your EmailJS Service ID
-  static const String _publicKey = 'YOUR_EMAILJS_PUBLIC_KEY';  // Replace with your EmailJS Public Key
-  static const String _chatTemplateId = 'template_chat';  // Replace with your Chat Template ID
-  static const String _prayerConfirmTemplateId = 'template_prayer_confirm';  // Replace with your Prayer Confirmation Template ID
-  static const String _prayerRequestTemplateId = 'template_prayer_request';  // Replace with your Prayer Request Template ID
-  static const String _devotionTemplateId = 'template_devotion';  // Replace with your Devotion Template ID
+  static const String _serviceId = 'service_am3oosx'; // Your EmailJS Service ID
+  static const String _publicKey =
+      'ew9BD7huZYdIJ9vwa'; // Your EmailJS Public Key
+  static const String _chatTemplateId = 'template_e4esruk';
+  static const String _prayerConfirmTemplateId = 'template_prayer_confirm';
+  static const String _prayerRequestTemplateId = 'template_prayer_request';
+  static const String _devotionTemplateId =
+      'template_e4esruk'; // Your Devotion Template ID
 
   /// Send chat transcript via email directly using EmailJS
   Future<bool> sendChatTranscript({
@@ -26,9 +57,10 @@ class EmailService {
     try {
       // Build chat transcript
       final StringBuffer transcript = StringBuffer();
-      
+
       for (final msg in messages) {
-        final time = '${msg.timestamp.hour.toString().padLeft(2, '0')}:${msg.timestamp.minute.toString().padLeft(2, '0')}';
+        final time =
+            '${msg.timestamp.hour.toString().padLeft(2, '0')}:${msg.timestamp.minute.toString().padLeft(2, '0')}';
         transcript.writeln('[$time] ${msg.role}:');
         transcript.writeln(msg.content);
         transcript.writeln('');
@@ -49,7 +81,7 @@ class EmailService {
           },
         },
       );
-      
+
       return response.statusCode == 200;
     } catch (e) {
       print('Error sending chat transcript: $e');
@@ -84,7 +116,7 @@ class EmailService {
           },
         },
       );
-      
+
       return response.statusCode == 200;
     } catch (e) {
       print('Error sending prayer confirmation: $e');
@@ -121,7 +153,7 @@ class EmailService {
           },
         },
       );
-      
+
       return response.statusCode == 200;
     } catch (e) {
       print('Error sending prayer request to team: $e');
@@ -159,7 +191,7 @@ class EmailService {
           },
         },
       );
-      
+
       return response.statusCode == 200;
     } catch (e) {
       print('Error sending devotion email: $e');

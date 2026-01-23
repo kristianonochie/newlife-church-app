@@ -801,7 +801,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                                 ),
                                 const SizedBox(height: 12),
                                 DropdownButtonFormField<String>(
-                                  value: _newAdminRole,
+                                  initialValue: _newAdminRole,
                                   items: const [
                                     DropdownMenuItem(value: 'admin', child: Text('Admin (staff)')),
                                     DropdownMenuItem(value: 'superadmin', child: Text('Superadmin')),

@@ -5,6 +5,7 @@ import '../../widgets/app_drawer.dart';
 import '../../widgets/church_app_bar.dart';
 import '../../widgets/app_footer.dart';
 import '../../services/content_service.dart';
+import '../../services/email_service.dart';
 import '../../services/analytics_service.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -15,6 +16,8 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
+  // Add EmailService instance
+  final _emailService = EmailService();
   final ContentService _contentService = ContentService();
   Map<String, dynamic> _content = {};
   bool _isLoading = true;
@@ -46,6 +49,39 @@ class _ContactScreenState extends State<ContactScreen> {
     super.dispose();
   }
 
+  Future<void> _submitContactForm() async {
+    if (_formKey.currentState!.validate()) {
+      final name = _nameController.text.trim();
+      final email = _emailController.text.trim();
+      final message = _messageController.text.trim();
+      String? errorMsg;
+      try {
+        final success = await _emailService.sendContactMessage(
+          fromName: name,
+          fromEmail: email,
+          message: message,
+        );
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Message sent successfully!')),
+          );
+          _nameController.clear();
+          _emailController.clear();
+          _messageController.clear();
+        } else {
+          errorMsg = 'Failed to send message. Please check your EmailJS settings and try again.';
+        }
+      } catch (e) {
+        errorMsg = 'Error: ${e.toString()}';
+      }
+      if (errorMsg != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMsg)),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
@@ -70,7 +106,7 @@ class _ContactScreenState extends State<ContactScreen> {
               'We\'d love to hear from you. Send us a message and we\'ll respond as soon as possible.',
             ),
             const SizedBox(height: 24),
-            
+
             // Contact Information
             if (_isLoading)
               const Center(child: CircularProgressIndicator())
@@ -89,7 +125,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       _ContactInfo(
                         icon: Icons.location_on,
                         label: 'Address',
-                        value: _content['address'] ?? 'Tonyrefail, Wales, UK',
+                        value: _content['address'] ?? 'Mill Street Tonyrefail, Porth, Wales. CF39 8AB',
                       ),
                       const SizedBox(height: 16),
                       _ContactInfo(
@@ -98,12 +134,13 @@ class _ContactScreenState extends State<ContactScreen> {
                         value: _content['phone'] ?? '+44 (0) 123 456 7890',
                       ),
                       const SizedBox(height: 16),
-                      _ContactInfo(
-                        icon: Icons.email,
-                        label: 'Email',
-                        value: _content['email'] ?? 'church@newlifecc.co.uk',
-                      ),
-                      if (_content['website'] != null) ...[                        const SizedBox(height: 16),
+                        _ContactInfo(
+                          icon: Icons.email,
+                          label: 'Email',
+                          value: _content['email'] ?? 'contact@newlifecc.co.uk',
+                        ),
+                      if (_content['website'] != null) ...[
+                        const SizedBox(height: 16),
                         _ContactInfo(
                           icon: Icons.language,
                           label: 'Website',
@@ -184,18 +221,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Message sent successfully!'),
-                              ),
-                            );
-                            _nameController.clear();
-                            _emailController.clear();
-                            _messageController.clear();
-                          }
-                        },
+                        onPressed: _submitContactForm,
                         child: const Text('Send Message'),
                       ),
                     ],
@@ -241,8 +267,8 @@ class _ContactInfo extends StatelessWidget {
               Text(
                 value,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ],
           ),

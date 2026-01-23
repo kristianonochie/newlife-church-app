@@ -6,9 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
 
-  factory NotificationService() => _instance;
-  
-  // Dummy factory for testing without Firebase
+  factory NotificationService({
+    FirebaseMessaging? firebaseMessaging,
+    FlutterLocalNotificationsPlugin? localNotifications,
+  }) {
+    if (firebaseMessaging != null) _instance._firebaseMessaging = firebaseMessaging;
+    if (localNotifications != null) _instance._localNotifications = localNotifications;
+    return _instance;
+  }
 
   NotificationService._internal();
 
@@ -19,31 +24,13 @@ class NotificationService {
 
   Future<void> init() async {
     try {
-      // Try to initialize Firebase
-      _firebaseMessaging = FirebaseMessaging.instance;
+      // Try to initialize Firebase if not already injected
+      _firebaseMessaging ??= FirebaseMessaging.instance;
     } catch (e) {
       // Firebase not initialized - skip push notifications
       print('Firebase not available: $e');
       _firebaseMessaging = null;
     }
-    
-    // Initialize local notifications
-    const AndroidInitializationSettings androidInitSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings iosInitSettings =
-        DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-
-    const InitializationSettings initSettings = InitializationSettings(
-      android: androidInitSettings,
-      iOS: iosInitSettings,
-    );
-
-    _localNotifications = FlutterLocalNotificationsPlugin();
-    await _localNotifications.initialize(initSettings);
 
     // Request permissions only if Firebase is available
     if (_firebaseMessaging != null) {
@@ -66,7 +53,7 @@ class NotificationService {
       // Get FCM token
       String? token = await _firebaseMessaging!.getToken();
       await _saveFCMToken(token ?? '');
-      
+
       // Subscribe to topics for receiving notifications
       await _subscribeToTopics();
     }

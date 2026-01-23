@@ -155,9 +155,9 @@ class ContentService {
       case 'contact':
         return {
           'church_name': 'New Life Community Church',
-          'address': '123 Church Street, Tonyrefail, CF39 8AA',
+          'address': 'Mill Street Tonyrefail, Porth, Wales. CF39 8AB',
           'phone': '+44 1234 567890',
-          'email': 'nlccapp@newlifecc.co.uk',
+          'email': 'contact@newlifecc.co.uk',
           'website': 'www.newlifecc.co.uk',
           'office_hours': 'Monday-Friday: 9:00 AM - 5:00 PM',
           'facebook': 'https://facebook.com/newlifecc',

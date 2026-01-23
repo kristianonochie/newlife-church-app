@@ -87,4 +87,4 @@
 // ✓ Appropriate for New Life Community Church context
 // ✓ 365-day comprehensive coverage with template structure
 
-print('Devotions Database: 212+ devotions ready for app integration. Merge complete!');
+// print('Devotions Database: 212+ devotions ready for app integration. Merge complete!');

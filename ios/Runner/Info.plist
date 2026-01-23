@@ -67,4 +67,11 @@
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth access is used for connecting to compatible devices.</string>
 </dict>
+	<!-- Allow arbitrary loads for YouTube video playback in WebView -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+</dict>
 </plist>

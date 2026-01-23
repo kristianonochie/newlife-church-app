@@ -92,17 +92,20 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.all(12),
-                child: Image.asset(
-                  'assets/images/newlife_logo.png',
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.chat_bubble,
-                      size: 40,
-                      color: Colors.blue,
-                    );
-                  },
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/newlife_logo.png',
+                    width: 96,
+                    height: 96,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.chat_bubble,
+                        size: 40,
+                        color: Colors.blue,
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 24),

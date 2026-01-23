@@ -91,7 +91,7 @@ class _WatchScreenState extends State<WatchScreen> {
     final pastVideosRaw = _content['past_videos'];
     final List<YouTubeVideo> parsed = [];
 
-    Future<YouTubeVideo> _buildVideo(String title, String url, String date) async {
+    Future<YouTubeVideo> buildVideo(String title, String url, String date) async {
       String finalTitle = title.isEmpty ? 'Sermon' : title;
       String thumb = '';
       // Try to fetch metadata via YouTube oEmbed (no API key needed)
@@ -121,7 +121,7 @@ class _WatchScreenState extends State<WatchScreen> {
     if (pastVideosRaw is List) {
       for (final item in pastVideosRaw) {
         final map = Map<String, String>.from(item as Map);
-        parsed.add(await _buildVideo(map['title'] ?? '', map['url'] ?? '', map['date'] ?? ''));
+        parsed.add(await buildVideo(map['title'] ?? '', map['url'] ?? '', map['date'] ?? ''));
       }
     } else if (pastVideosRaw is String && pastVideosRaw.isNotEmpty) {
       final lines = pastVideosRaw.split('\n');
@@ -131,7 +131,7 @@ class _WatchScreenState extends State<WatchScreen> {
         final title = parts.isNotEmpty ? parts[0].trim() : 'Sermon';
         final url = parts.length > 1 ? parts[1].trim() : '';
         final date = parts.length > 2 ? parts[2].trim() : '';
-        parsed.add(await _buildVideo(title, url, date));
+        parsed.add(await buildVideo(title, url, date));
       }
     }
 

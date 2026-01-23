@@ -304,7 +304,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                           children: [
                             Expanded(
                               child: DropdownButtonFormField<String>(
-                                value: _selectedRole,
+                                initialValue: _selectedRole,
                                 decoration: const InputDecoration(
                                   labelText: 'Role',
                                   border: OutlineInputBorder(),
@@ -322,7 +322,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                             const SizedBox(width: 16),
                             Expanded(
                               child: DropdownButtonFormField<int>(
-                                value: _selectedPriority,
+                                initialValue: _selectedPriority,
                                 decoration: const InputDecoration(
                                   labelText: 'Priority Level',
                                   border: OutlineInputBorder(),

@@ -14,7 +14,8 @@ void registerIframeView(String iframeId, String embedUrl) {
         ..style.border = 'none'
         ..style.width = '100%'
         ..style.height = '100%'
-        ..allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        ..allow =
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         ..allowFullscreen = true;
       return iframe;
     },
@@ -27,6 +28,8 @@ Widget buildWebPlayerWidget({
   required String iframeId,
   required VoidCallback onBack,
   required Future<void> Function() onOpenExternal,
+  bool hasError = false,
+  VoidCallback? onRetry,
 }) {
   return Container(
     color: Colors.black,
@@ -50,18 +53,35 @@ Widget buildWebPlayerWidget({
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-                Container(
-                  height: 600,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppTheme.primaryColor, width: 2),
+                if (hasError)
+                  Column(
+                    children: [
+                      const Icon(Icons.error, color: Colors.red, size: 48),
+                      const SizedBox(height: 16),
+                      const Text('Failed to load video',
+                          style: TextStyle(color: Colors.white)),
+                      const SizedBox(height: 16),
+                      if (onRetry != null)
+                        ElevatedButton(
+                          onPressed: onRetry,
+                          child: const Text('Retry'),
+                        ),
+                    ],
+                  )
+                else
+                  Container(
+                    height: 600,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                      border:
+                          Border.all(color: AppTheme.primaryColor, width: 2),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: HtmlElementView(viewType: iframeId),
+                    ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: HtmlElementView(viewType: iframeId),
-                  ),
-                ),
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
                   onPressed: onBack,
