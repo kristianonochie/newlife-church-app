@@ -22,12 +22,15 @@ class VideoPlayerScreen extends StatefulWidget {
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
+
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late WebViewController _webViewController;
   bool _isLoading = true;
   bool _hasError = false;
   bool _isNativePlatform = false;
   late final String _iframeId;
+  int _retryCount = 0;
+  final int _maxRetries = 3;
 
   @override
   void initState() {
@@ -108,12 +111,20 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             setState(() {
               _isLoading = false;
               _hasError = false;
+              _retryCount = 0;
             });
           },
-          onWebResourceError: (error) {
+          onWebResourceError: (error) async {
+            if (_retryCount < _maxRetries) {
+              _retryCount++;
+              await Future.delayed(const Duration(seconds: 1));
+              _webViewController.loadRequest(Uri.parse(embedUrl));
+              return;
+            }
             setState(() {
               _isLoading = false;
               _hasError = true;
+              _retryCount = 0;
             });
           },
         ),
@@ -180,12 +191,24 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       onBack: () => Navigator.of(context).pop(),
       onOpenExternal: _openInFacebook,
       hasError: _hasError,
-      onRetry: () {
-        setState(() {
-          _hasError = false;
-          _isLoading = true;
-        });
-        _registerIframeView();
+      onRetry: () async {
+        if (_retryCount < _maxRetries) {
+          setState(() {
+            _hasError = false;
+            _isLoading = true;
+          });
+          _retryCount++;
+          await Future.delayed(const Duration(seconds: 1));
+          _registerIframeView();
+          setState(() {
+            _isLoading = false;
+          });
+        } else {
+          setState(() {
+            _hasError = true;
+            _retryCount = 0;
+          });
+        }
       },
     );
   }
