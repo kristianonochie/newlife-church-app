@@ -21,11 +21,16 @@ class AppFooter extends StatelessWidget {
             const SizedBox(width: 16),
             GestureDetector(
               onTap: () {
-                // Use GoRouter for navigation to support web
+                // Use GoRouter for navigation to support web and mobile
                 // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamed('/privacy');
-                // If using GoRouter, prefer:
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                // Use GoRouter navigation
+                // ignore: use_build_context_synchronously
                 // context.go('/privacy');
+                // To avoid context issues, use GoRouter.of(context).go
+                GoRouter.of(context).go('/privacy');
               },
               child: Text(
                 'Privacy',
