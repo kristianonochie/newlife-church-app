@@ -83,265 +83,270 @@ class _DevotionScreenState extends State<DevotionScreen> {
 
           return SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              // Inspirational Header Section
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppTheme.primaryColor,
-                      AppTheme.primaryColor.withOpacity(0.8),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.light_mode_rounded,
-                          color: Colors.amber[300],
-                          size: 28,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            'Start Your Day with God\'s Word',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
+                // Inspirational Header Section
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppTheme.primaryColor,
+                        AppTheme.primaryColor.withOpacity(0.8),
                       ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.3),
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
-                          Text(
-                            '✦ Why Daily Devotions Matter:',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          Icon(
+                            Icons.light_mode_rounded,
+                            color: Colors.amber[300],
+                            size: 28,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '• Strengthen your faith through Scripture and reflection\n• Connect with God\'s Word every single day\n• Find guidance, encouragement, and peace\n• Deepen your relationship with Christ\n• Build spiritual discipline and consistency',
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.white.withOpacity(0.95),
-                                      height: 1.6,
-                                    ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            '"Your word is a lamp to my feet and a light to my path." - Psalm 119:105',
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.amber[100],
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Start Your Day with God\'s Word',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '✦ Why Daily Devotions Matter:',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '• Strengthen your faith through Scripture and reflection\n• Connect with God\'s Word every single day\n• Find guidance, encouragement, and peace\n• Deepen your relationship with Christ\n• Build spiritual discipline and consistency',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: Colors.white.withOpacity(0.95),
+                                    height: 1.6,
+                                  ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              '"Your word is a lamp to my feet and a light to my path." - Psalm 119:105',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: Colors.amber[100],
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              // Single Devotional Link with Navigation
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Daily Devotional',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+                // Single Devotional Link with Navigation
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Daily Devotional',
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          // Previous Day Button
+                          Expanded(
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedDate = _selectedDate
+                                      .subtract(const Duration(days: 1));
+                                });
+                              },
+                              icon: const Icon(Icons.arrow_back_ios),
+                              color: AppTheme.primaryColor,
+                              tooltip: 'Previous Day',
+                            ),
+                          ),
+                          // Current Devotion Link
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppTheme.primaryColor,
+                                  width: 1.5,
+                                ),
+                                color: AppTheme.primaryColor.withOpacity(0.08),
                               ),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                leading: Icon(
+                                  Icons.calendar_today,
+                                  color: AppTheme.primaryColor,
+                                  size: 20,
+                                ),
+                                title: Text(
+                                  DateFormat('MMM d, yyyy')
+                                      .format(_selectedDate),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppTheme.primaryColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                subtitle: devotionsForDate.isNotEmpty
+                                    ? Text(
+                                        devotionsForDate[0].title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.grey[700],
+                                          fontSize: 12,
+                                        ),
+                                      )
+                                    : Text(
+                                        'No devotion available',
+                                        style: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ),
+                          // Next Day Button
+                          Expanded(
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _selectedDate = _selectedDate
+                                      .add(const Duration(days: 1));
+                                });
+                              },
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              color: AppTheme.primaryColor,
+                              tooltip: 'Next Day',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                // Date display banner
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        width: 1,
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        // Previous Day Button
-                        Expanded(
-                          child: IconButton(
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat('EEEE, MMMM d, yyyy')
+                                .format(_selectedDate),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.primaryColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            devotionsForDate.isEmpty
+                                ? 'No devotion for this date'
+                                : 'Tap to read today\'s devotion',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_ios, size: 20),
                             onPressed: () {
                               setState(() {
                                 _selectedDate = _selectedDate
                                     .subtract(const Duration(days: 1));
                               });
                             },
-                            icon: const Icon(Icons.arrow_back_ios),
-                            color: AppTheme.primaryColor,
                             tooltip: 'Previous Day',
                           ),
-                        ),
-                        // Current Devotion Link
-                        Expanded(
-                          flex: 4,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppTheme.primaryColor,
-                                width: 1.5,
-                              ),
-                              color: AppTheme.primaryColor.withOpacity(0.08),
-                            ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              leading: Icon(
-                                Icons.calendar_today,
-                                color: AppTheme.primaryColor,
-                                size: 20,
-                              ),
-                              title: Text(
-                                DateFormat('MMM d, yyyy').format(_selectedDate),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppTheme.primaryColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              subtitle: devotionsForDate.isNotEmpty
-                                  ? Text(
-                                      devotionsForDate[0].title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : Text(
-                                      'No devotion available',
-                                      style: TextStyle(
-                                        color: Colors.grey[500],
-                                        fontSize: 12,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ),
-                        // Next Day Button
-                        Expanded(
-                          child: IconButton(
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward_ios, size: 20),
                             onPressed: () {
                               setState(() {
                                 _selectedDate =
                                     _selectedDate.add(const Duration(days: 1));
                               });
                             },
-                            icon: const Icon(Icons.arrow_forward_ios),
-                            color: AppTheme.primaryColor,
                             tooltip: 'Next Day',
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Date display banner
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
-                  border: Border(
-                    bottom: BorderSide(
-                      color: AppTheme.primaryColor.withOpacity(0.3),
-                      width: 1,
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          DateFormat('EEEE, MMMM d, yyyy')
-                              .format(_selectedDate),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.primaryColor,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          devotionsForDate.isEmpty
-                              ? 'No devotion for this date'
-                              : 'Tap to read today\'s devotion',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios, size: 20),
-                          onPressed: () {
-                            setState(() {
-                              _selectedDate = _selectedDate
-                                  .subtract(const Duration(days: 1));
-                            });
-                          },
-                          tooltip: 'Previous Day',
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios, size: 20),
-                          onPressed: () {
-                            setState(() {
-                              _selectedDate =
-                                  _selectedDate.add(const Duration(days: 1));
-                            });
-                          },
-                          tooltip: 'Next Day',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              // Devotions list
-              Expanded(
-                child: devotionsForDate.isEmpty
+                // Devotions list
+                devotionsForDate.isEmpty
                     ? Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -371,6 +376,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                         ),
                       )
                     : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         padding: const EdgeInsets.all(16),
                         itemCount: devotionsForDate.length,
                         itemBuilder: (context, index) {
@@ -411,97 +418,97 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           );
                         },
                       ),
-              ),
-              // Quick Links at bottom
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    // Bible Quick Link
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => context.goNamed('bible'),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryColor,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.menu_book,
-                                color: Colors.white,
-                                size: 32,
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'Bible',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                // Quick Links at bottom
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      // Bible Quick Link
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => context.goNamed('bible'),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppTheme.primaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.menu_book,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Bible',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    // Give Quick Link
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => context.goNamed('give'),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: AppTheme.secondaryColor,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.volunteer_activism,
-                                color: Colors.white,
-                                size: 32,
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                'Give',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                      const SizedBox(width: 12),
+                      // Give Quick Link
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => context.goNamed('give'),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppTheme.secondaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.volunteer_activism,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'Give',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
