@@ -35,7 +35,7 @@ class AppBottomNav extends StatelessWidget {
             context.goNamed('prayer');
             break;
           case 6:
-            // ...existing code...
+            context.goNamed('give');
             break;
           case 7:
             context.goNamed('nlcchat');

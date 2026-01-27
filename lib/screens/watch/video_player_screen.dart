@@ -30,7 +30,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _isNativePlatform = false;
   late final String _iframeId;
   int _retryCount = 0;
-  final int _maxRetries = 3;
+  final int _maxRetries = 5;
+  bool _isRetrying = false;
 
   @override
   void initState() {
@@ -112,10 +113,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               _isLoading = false;
               _hasError = false;
               _retryCount = 0;
+              _isRetrying = false;
             });
           },
           onWebResourceError: (error) async {
             if (_retryCount < _maxRetries) {
+              setState(() {
+                _isRetrying = true;
+                _isLoading = true;
+              });
               _retryCount++;
               await Future.delayed(const Duration(seconds: 1));
               _webViewController.loadRequest(Uri.parse(embedUrl));
@@ -125,6 +131,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               _isLoading = false;
               _hasError = true;
               _retryCount = 0;
+              _isRetrying = false;
             });
           },
         ),
@@ -162,6 +169,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     setState(() {
                       _isLoading = true;
                       _hasError = false;
+                      _isRetrying = false;
                     });
                     _initWebView();
                   },
@@ -175,8 +183,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         if (_isLoading)
           Container(
             color: Colors.black87,
-            child: const Center(
-              child: CircularProgressIndicator(),
+            child: Center(
+              child: _isRetrying
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 16),
+                        Text('Retrying video...', style: TextStyle(color: Colors.white)),
+                      ],
+                    )
+                  : const CircularProgressIndicator(),
             ),
           ),
       ],

@@ -27,8 +27,8 @@ class _GiveScreenState extends State<GiveScreen> {
     final url =
         'https://www.paypal.com/donate?hosted_button_id=V56HCXFE46U5E&custom=${Uri.encodeComponent(givingType)}';
     final uri = Uri.parse(url);
+    // Always open in external browser on iOS for App Store compliance
     if (kIsWeb) {
-      // On web, open in a new browser tab
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
@@ -37,9 +37,9 @@ class _GiveScreenState extends State<GiveScreen> {
         );
       }
     } else {
-      // On mobile, open in-app webview
+      // On iOS and Android, open in external browser only
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.inAppWebView);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Could not open PayPal.')),
@@ -139,7 +139,7 @@ class _GiveScreenState extends State<GiveScreen> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'You will be redirected to PayPal in your browser to complete your donation.',
+                        'Donations are handled securely on our website. You will be redirected to your browser to complete your donation.',
                         style: TextStyle(color: Colors.orange, fontSize: 14),
                       ),
                     ),
