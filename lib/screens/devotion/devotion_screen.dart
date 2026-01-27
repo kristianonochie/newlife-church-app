@@ -80,8 +80,9 @@ class _DevotionScreenState extends State<DevotionScreen> {
             return const Center(child: Text('No devotions available'));
           }
 
-          return Column(
-            children: [
+          return SingleChildScrollView(
+            child: Column(
+              children: [
               // Inspirational Header Section
               Container(
                 width: double.infinity,
@@ -503,8 +504,13 @@ class _DevotionScreenState extends State<DevotionScreen> {
           );
         },
       ),
-      bottomNavigationBar: const AppBottomNav(currentIndex: 1),
-      persistentFooterButtons: const [AppFooter()],
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          AppBottomNav(currentIndex: 1),
+          AppFooter(),
+        ],
+      ),
       floatingActionButton: FloatingChatButton(
         onPressed: () {
           context.goNamed('nlcchat');

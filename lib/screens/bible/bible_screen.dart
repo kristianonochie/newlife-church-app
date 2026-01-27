@@ -109,8 +109,13 @@ class _BibleScreenState extends State<BibleScreen>
           _InternetSearchTab(),
         ],
       ),
-      bottomNavigationBar: const AppBottomNav(currentIndex: 2),
-      persistentFooterButtons: const [AppFooter()],
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          AppBottomNav(currentIndex: 2),
+          AppFooter(),
+        ],
+      ),
       floatingActionButton: FloatingChatButton(
         onPressed: () {
           showModalBottomSheet(

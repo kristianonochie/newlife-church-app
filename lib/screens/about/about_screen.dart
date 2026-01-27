@@ -130,21 +130,34 @@ class _AboutScreenState extends State<AboutScreen> {
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(height: 12),
-                            Text('Is there disabled access?', style: Theme.of(context).textTheme.titleMedium),
+                            Text('Is there disabled access?',
+                                style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 2),
-                            Text('Yes, there is a disabled ramp, disabled toilet and disabled lift.', style: Theme.of(context).textTheme.bodyMedium),
+                            Text(
+                                'Yes, there is a disabled ramp, disabled toilet and disabled lift.',
+                                style: Theme.of(context).textTheme.bodyMedium),
                             const SizedBox(height: 8),
-                            Text('Is there a mother and baby changing facility?', style: Theme.of(context).textTheme.titleMedium),
+                            Text(
+                                'Is there a mother and baby changing facility?',
+                                style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 2),
-                            Text('Yes, this is situated in the disabled toilet.', style: Theme.of(context).textTheme.bodyMedium),
+                            Text(
+                                'Yes, this is situated in the disabled toilet.',
+                                style: Theme.of(context).textTheme.bodyMedium),
                             const SizedBox(height: 8),
-                            Text('Is there car parking?', style: Theme.of(context).textTheme.titleMedium),
+                            Text('Is there car parking?',
+                                style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 2),
-                            Text('Although no specific car park, there is ample parking on road and a public car park a few metres from the church.', style: Theme.of(context).textTheme.bodyMedium),
+                            Text(
+                                'Although no specific car park, there is ample parking on road and a public car park a few metres from the church.',
+                                style: Theme.of(context).textTheme.bodyMedium),
                             const SizedBox(height: 8),
-                            Text('What can my children do in church?', style: Theme.of(context).textTheme.titleMedium),
+                            Text('What can my children do in church?',
+                                style: Theme.of(context).textTheme.titleMedium),
                             const SizedBox(height: 2),
-                            Text('There is a children’s group that takes place during the church service from toddlers and those attending primary school. All our staff have had DRB checks.', style: Theme.of(context).textTheme.bodyMedium),
+                            Text(
+                                'There is a children’s group that takes place during the church service from toddlers and those attending primary school. All our staff have had DRB checks.',
+                                style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -194,6 +207,15 @@ class _AboutScreenState extends State<AboutScreen> {
                       times: [
                         '10:00 – 12:30 - HUB Cafe',
                         '19:00 – 20:30 - Warrior Women (last Wednesday of the month)'
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    _ServiceTimeCard(
+                      day: 'Thursday',
+                      times: [
+                        '10:00 – 12:30 - HUB Cafe',
+                        '18:00 – 19:30 - Kids Club',
+                        '19:30 – 21:00 - Youth Group',
                       ],
                     ),
                     const SizedBox(height: 24),
