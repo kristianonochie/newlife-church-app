@@ -111,8 +111,8 @@ class _BibleScreenState extends State<BibleScreen>
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          AppBottomNav(currentIndex: 2),
+        children: [
+          const AppBottomNav(currentIndex: 2),
           AppFooter(),
         ],
       ),

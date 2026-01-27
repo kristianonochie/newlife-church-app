@@ -506,8 +506,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          AppBottomNav(currentIndex: 1),
+        children: [
+          const AppBottomNav(currentIndex: 1),
           AppFooter(),
         ],
       ),

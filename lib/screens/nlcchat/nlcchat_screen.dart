@@ -55,7 +55,7 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
         userEmail: userEmail,
         sendTranscript: sendTranscript,
       ),
-      persistentFooterButtons: const [AppFooter()],
+      bottomNavigationBar: AppFooter(),
     );
   }
 
