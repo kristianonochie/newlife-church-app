@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../chat/chat_screen.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/church_app_bar.dart';
+import '../../widgets/app_footer.dart';
 
 class NLCChatScreen extends StatefulWidget {
   const NLCChatScreen({super.key});

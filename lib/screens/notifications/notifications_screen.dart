@@ -5,6 +5,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/app_bottom_nav.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/church_app_bar.dart';
+import '../../widgets/app_footer.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
