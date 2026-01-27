@@ -10,9 +10,18 @@ class PrivacyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
     return Scaffold(
-      appBar: const ChurchAppBar(
-        title: 'Privacy Policy',
-        showBackButton: true,
+      appBar: AppBar(
+        title: const Text('Privacy Policy'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              Navigator.of(context).pushReplacementNamed('/');
+            }
+          },
+        ),
       ),
       body: ListView(
         padding: EdgeInsets.all(isMobile ? 16 : 24),
