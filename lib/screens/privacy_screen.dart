@@ -95,13 +95,7 @@ class PrivacyScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AppBottomNav(currentIndex: -1),
-          AppFooter(),
-        ],
-      ),
+      bottomNavigationBar: AppFooter(),
     );
   }
 }
