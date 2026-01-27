@@ -41,7 +41,10 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
             child: Center(
               child: Text(
                 'Welcome, $userName!',
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
               ),
             ),
           ),
@@ -52,6 +55,7 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
         userEmail: userEmail,
         sendTranscript: sendTranscript,
       ),
+      persistentFooterButtons: const [AppFooter()],
     );
   }
 
@@ -220,59 +224,63 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
                             onPressed: () {
                               final name = nameController.text.trim();
                               final email = emailController.text.trim();
-                              
+
                               if (name.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Please enter your first name'),
+                                    content:
+                                        Text('Please enter your first name'),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
                                 return;
                               }
-                              
+
                               if (email.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Please enter your email address'),
+                                    content:
+                                        Text('Please enter your email address'),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
                                 return;
                               }
-                              
+
                               // Basic email validation
-                              if (!email.contains('@') || !email.contains('.')) {
+                              if (!email.contains('@') ||
+                                  !email.contains('.')) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Please enter a valid email address'),
+                                    content: Text(
+                                        'Please enter a valid email address'),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
                                 return;
                               }
-                              
+
                               setState(() {
                                 userName = name;
                                 userEmail = email;
                                 sendTranscript = localSendTranscript;
                               });
                             },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
-                          ),
-                          child: const Text(
-                            'Start Chat',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                            child: const Text(
+                              'Start Chat',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       ],
                     ),
                   ),

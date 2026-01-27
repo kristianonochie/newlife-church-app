@@ -110,6 +110,7 @@ class _BibleScreenState extends State<BibleScreen>
         ],
       ),
       bottomNavigationBar: const AppBottomNav(currentIndex: 2),
+      persistentFooterButtons: const [AppFooter()],
       floatingActionButton: FloatingChatButton(
         onPressed: () {
           showModalBottomSheet(
@@ -405,7 +406,8 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
   }
 
   Future<List<Map<String, String>>> searchNlccBackend(String query) async {
-    final url = Uri.parse('http://localhost:8000/search?query=${Uri.encodeComponent(query)}');
+    final url = Uri.parse(
+        'http://localhost:8000/search?query=${Uri.encodeComponent(query)}');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -456,7 +458,8 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search the internet (e.g., faith, prayer, church history)...',
+                    hintText:
+                        'Search the internet (e.g., faith, prayer, church history)...',
                     prefixIcon: const Icon(Icons.language),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -469,7 +472,8 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
               ElevatedButton(
                 onPressed: _performSearch,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -486,7 +490,8 @@ class _InternetSearchTabState extends State<_InternetSearchTab> {
           else if (_results.isEmpty && _searchController.text.isNotEmpty)
             const Expanded(
               child: Center(
-                child: Text('No results found. Try a different search or broader keywords.'),
+                child: Text(
+                    'No results found. Try a different search or broader keywords.'),
               ),
             )
           else if (_results.isEmpty)

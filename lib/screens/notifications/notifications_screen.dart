@@ -23,7 +23,7 @@ class NotificationsScreen extends StatelessWidget {
               if (notifProvider.notifications.isEmpty) {
                 return const SizedBox();
               }
-              
+
               return PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
@@ -147,6 +147,7 @@ class NotificationsScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: const AppBottomNav(currentIndex: 0),
+      persistentFooterButtons: const [AppFooter()],
     );
   }
 

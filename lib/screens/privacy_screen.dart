@@ -60,6 +60,8 @@ class PrivacyScreen extends StatelessWidget {
           Text('We reserve the right to make change to this Privacy Policy.\nLast modification was made 23rd April 2019.\n\nPB/DP 23/04/2019'),
         ],
       ),
+      ),
+      persistentFooterButtons: const [AppFooter()],
     );
   }
 }

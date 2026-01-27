@@ -14,9 +14,9 @@ import '../screens/admin/admin_login_screen.dart';
 import '../screens/admin/admin_dashboard_screen.dart';
 import '../screens/watch/watch_screen.dart';
 import '../screens/give/give_screen.dart';
+import '../screens/privacy_screen.dart';
 
 class AppRoutes {
-  import '../screens/privacy_screen.dart';
   static final router = GoRouter(
     initialLocation: '/',
     routes: [

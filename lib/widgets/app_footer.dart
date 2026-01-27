@@ -14,19 +14,25 @@ class AppFooter extends StatelessWidget {
             Text(
               'Developed by NLCC Tech Team',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey.shade600,
-                fontStyle: FontStyle.italic,
-              ),
+                    color: Colors.grey.shade600,
+                    fontStyle: FontStyle.italic,
+                  ),
             ),
             const SizedBox(width: 16),
             GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed('/privacy'),
+              onTap: () {
+                // Use GoRouter for navigation to support web
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pushNamed('/privacy');
+                // If using GoRouter, prefer:
+                // context.go('/privacy');
+              },
               child: Text(
                 'Privacy',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
               ),
             ),
           ],

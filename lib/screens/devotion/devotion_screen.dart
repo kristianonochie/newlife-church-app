@@ -68,18 +68,18 @@ class _DevotionScreenState extends State<DevotionScreen> {
       body: Consumer<DevotionProvider>(
         builder: (context, devotionProvider, _) {
           final devotions = devotionProvider.allDevotions;
-          
+
           // Filter devotions by selected date
           final devotionsForDate = devotions.where((d) {
             return d.date.year == _selectedDate.year &&
-                   d.date.month == _selectedDate.month &&
-                   d.date.day == _selectedDate.day;
+                d.date.month == _selectedDate.month &&
+                d.date.day == _selectedDate.day;
           }).toList();
-          
+
           if (devotions.isEmpty) {
             return const Center(child: Text('No devotions available'));
           }
-          
+
           return Column(
             children: [
               // Inspirational Header Section
@@ -110,10 +110,13 @@ class _DevotionScreenState extends State<DevotionScreen> {
                         Expanded(
                           child: Text(
                             'Start Your Day with God\'s Word',
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                         ),
                       ],
@@ -134,27 +137,32 @@ class _DevotionScreenState extends State<DevotionScreen> {
                         children: [
                           Text(
                             '✦ Why Daily Devotions Matter:',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             '• Strengthen your faith through Scripture and reflection\n• Connect with God\'s Word every single day\n• Find guidance, encouragement, and peace\n• Deepen your relationship with Christ\n• Build spiritual discipline and consistency',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.white.withOpacity(0.95),
-                              height: 1.6,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.white.withOpacity(0.95),
+                                      height: 1.6,
+                                    ),
                           ),
                           const SizedBox(height: 12),
                           Text(
                             '"Your word is a lamp to my feet and a light to my path." - Psalm 119:105',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.amber[100],
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.amber[100],
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ],
                       ),
@@ -171,9 +179,10 @@ class _DevotionScreenState extends State<DevotionScreen> {
                   children: [
                     Text(
                       'Daily Devotional',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -183,7 +192,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                _selectedDate = _selectedDate.subtract(const Duration(days: 1));
+                                _selectedDate = _selectedDate
+                                    .subtract(const Duration(days: 1));
                               });
                             },
                             icon: const Icon(Icons.arrow_back_ios),
@@ -204,7 +214,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                               color: AppTheme.primaryColor.withOpacity(0.08),
                             ),
                             child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
                               leading: Icon(
                                 Icons.calendar_today,
                                 color: AppTheme.primaryColor,
@@ -244,7 +255,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                _selectedDate = _selectedDate.add(const Duration(days: 1));
+                                _selectedDate =
+                                    _selectedDate.add(const Duration(days: 1));
                               });
                             },
                             icon: const Icon(Icons.arrow_forward_ios),
@@ -278,7 +290,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          DateFormat('EEEE, MMMM d, yyyy').format(_selectedDate),
+                          DateFormat('EEEE, MMMM d, yyyy')
+                              .format(_selectedDate),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -303,7 +316,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           icon: const Icon(Icons.arrow_back_ios, size: 20),
                           onPressed: () {
                             setState(() {
-                              _selectedDate = _selectedDate.subtract(const Duration(days: 1));
+                              _selectedDate = _selectedDate
+                                  .subtract(const Duration(days: 1));
                             });
                           },
                           tooltip: 'Previous Day',
@@ -312,7 +326,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           icon: const Icon(Icons.arrow_forward_ios, size: 20),
                           onPressed: () {
                             setState(() {
-                              _selectedDate = _selectedDate.add(const Duration(days: 1));
+                              _selectedDate =
+                                  _selectedDate.add(const Duration(days: 1));
                             });
                           },
                           tooltip: 'Next Day',
@@ -361,14 +376,16 @@ class _DevotionScreenState extends State<DevotionScreen> {
                           return Card(
                             margin: const EdgeInsets.only(bottom: 16),
                             child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
                               leading: Icon(
                                 Icons.book_outlined,
                                 color: AppTheme.primaryColor,
                               ),
                               title: Text(
                                 devotion.title,
-                                style: const TextStyle(fontWeight: FontWeight.w600),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600),
                               ),
                               subtitle: Text(
                                 devotion.scripture,
@@ -487,6 +504,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
         },
       ),
       bottomNavigationBar: const AppBottomNav(currentIndex: 1),
+      persistentFooterButtons: const [AppFooter()],
       floatingActionButton: FloatingChatButton(
         onPressed: () {
           context.goNamed('nlcchat');
