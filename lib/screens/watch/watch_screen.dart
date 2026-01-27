@@ -471,9 +471,19 @@ class _WatchScreenState extends State<WatchScreen> {
                               ),
                               const SizedBox(height: 12),
                               Text(
-                                '📅 Sunday Service: 11:00 AM\n'
-                                '🙏 Prayer Meeting: Tuesday 6:00 PM\n'
-                                '📖 Bible Study: Wednesday 7:00 PM',
+                                '📅 Sunday\n'
+                                '  11:00 – 12:15  Morning Celebration\n'
+                                '  11:30 – 12:15  Junior Church\n'
+                                '🍰 Monday\n'
+                                '  10:00 – 12:30  HUB Cafe\n'
+                                '🍰 Tuesday\n'
+                                '  10:00 – 12:30  HUB Cafe\n'
+                                '  19:00 – 21:00  Prayer and Bible Study\n'
+                                '🍰 Wednesday\n'
+                                '  10:00 – 12:30  HUB Cafe\n'
+                                '  19:00 – 20:30  Warrior Women (last Wednesday of the month)\n'
+                                '🍰 Thursday\n'
+                                '  10:00 – 12:30  HUB Cafe',
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.blue.shade900,

@@ -71,52 +71,85 @@ class _AboutScreenState extends State<AboutScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _content['church_name'] ??
-                                  'New Life Community Church',
-                              style: Theme.of(context).textTheme.displayMedium,
+                              'Who We Are',
+                              style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              _content['location'] ?? 'Tonyrefail, Wales',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              _content['description'] ??
-                                  'A CHURCH WHO EXISTS TO LOVE GOD AND LOVE PEOPLE',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(
-                                    fontStyle: FontStyle.italic,
-                                  ),
+                              'New Life Community Church is an Assemblies of God church who exists to love God and love people – displaying that love by our actions.',
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Text(
-                      'Our Mission',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      _content['mission'] ??
-                          'To spread the love of God and serve our community.',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'What We Believe',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Our Core Beliefs',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'We accept the Bible as the inspired Word of God, our authoritative guide in all aspects of faith and practice. We believe in the Trinity of God the Father, Son, and Holy Spirit, who are each fully God. We affirm the need for a personal relationship with God, made possible through the work of Christ and received through repentance, faith, baptism in water, and the gift of the Holy Spirit.',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'Our Mission and Hope',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'We embrace Christ’s commission to preach the good news to all, recognizing the church as the company of those who respond to the gospel message. We look forward to Christ’s personal return. This is not intended to be a comprehensive statement of all we believe as Christians but serves to show our belief in the fundamental truths that have undergirded the Christian faith from its inception more than 2,000 years ago through to this present day.',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 24),
-                    Text(
-                      'Our Vision',
-                      style: Theme.of(context).textTheme.headlineSmall,
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Frequently Asked Questions',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(height: 12),
+                            Text('Is there disabled access?', style: Theme.of(context).textTheme.titleMedium),
+                            const SizedBox(height: 2),
+                            Text('Yes, there is a disabled ramp, disabled toilet and disabled lift.', style: Theme.of(context).textTheme.bodyMedium),
+                            const SizedBox(height: 8),
+                            Text('Is there a mother and baby changing facility?', style: Theme.of(context).textTheme.titleMedium),
+                            const SizedBox(height: 2),
+                            Text('Yes, this is situated in the disabled toilet.', style: Theme.of(context).textTheme.bodyMedium),
+                            const SizedBox(height: 8),
+                            Text('Is there car parking?', style: Theme.of(context).textTheme.titleMedium),
+                            const SizedBox(height: 2),
+                            Text('Although no specific car park, there is ample parking on road and a public car park a few metres from the church.', style: Theme.of(context).textTheme.bodyMedium),
+                            const SizedBox(height: 8),
+                            Text('What can my children do in church?', style: Theme.of(context).textTheme.titleMedium),
+                            const SizedBox(height: 2),
+                            Text('There is a children’s group that takes place during the church service from toddlers and those attending primary school. All our staff have had DRB checks.', style: Theme.of(context).textTheme.bodyMedium),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      _content['vision'] ??
-                          'A thriving community united in faith.',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    const SizedBox(height: 24),
                     if (_content['pastor_name'] != null) ...[
                       const SizedBox(height: 24),
                       Text(

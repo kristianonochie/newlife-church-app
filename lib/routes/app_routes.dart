@@ -16,9 +16,15 @@ import '../screens/watch/watch_screen.dart';
 import '../screens/give/give_screen.dart';
 
 class AppRoutes {
+  import '../screens/privacy_screen.dart';
   static final router = GoRouter(
     initialLocation: '/',
     routes: [
+      GoRoute(
+        path: '/privacy',
+        name: 'privacy',
+        builder: (context, state) => const PrivacyScreen(),
+      ),
       GoRoute(
         path: '/',
         name: 'home',

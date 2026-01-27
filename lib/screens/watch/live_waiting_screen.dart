@@ -80,15 +80,55 @@ class LiveWaitingScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        '📅 Sunday Service: 11:00 AM',
+                        '📅 Sunday',
                         style: TextStyle(fontSize: 16, height: 1.8),
                       ),
                       const Text(
-                        '🙏 Tuesday Prayer: 6:00 PM',
+                        '  11:00 – 12:15  Morning Celebration',
                         style: TextStyle(fontSize: 16, height: 1.8),
                       ),
                       const Text(
-                        '📖 Wednesday Bible Study: 7:00 PM',
+                        '  11:30 – 12:15  Junior Church',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '🍰 Monday',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  10:00 – 12:30  HUB Cafe',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '🍰 Tuesday',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  10:00 – 12:30  HUB Cafe',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  19:00 – 21:00  Prayer and Bible Study',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '🍰 Wednesday',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  10:00 – 12:30  HUB Cafe',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  19:00 – 20:30  Warrior Women (last Wednesday of the month)',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '🍰 Thursday',
+                        style: TextStyle(fontSize: 16, height: 1.8),
+                      ),
+                      const Text(
+                        '  10:00 – 12:30  HUB Cafe',
                         style: TextStyle(fontSize: 16, height: 1.8),
                       ),
                     ],

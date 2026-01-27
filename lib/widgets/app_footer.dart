@@ -8,12 +8,28 @@ class AppFooter extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Center(
-        child: Text(
-          'Developed by NLCC Tech Team',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.grey.shade600,
-            fontStyle: FontStyle.italic,
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Developed by NLCC Tech Team',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.grey.shade600,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(width: 16),
+            GestureDetector(
+              onTap: () => Navigator.of(context).pushNamed('/privacy'),
+              child: Text(
+                'Privacy',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
