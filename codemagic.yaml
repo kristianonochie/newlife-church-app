@@ -1,0 +1,150 @@
+workflows:
+  android-release:
+    name: Android Release
+    max_build_duration: 120
+    environment:
+      android_signing:
+        - newlife_keystore
+      vars:
+        ANDROID_KEYSTORE_PATH: /tmp/keystore.jks
+        ANDROID_KEYSTORE_PASSWORD: $KEYSTORE_PASSWORD
+        ANDROID_KEY_PASSWORD: $KEY_PASSWORD
+        ANDROID_KEY_ALIAS: $KEY_ALIAS
+      flutter: stable
+      xcode: latest
+      java: 11
+    triggering:
+      events:
+        - push
+      branch:
+        pattern: 'release|main'
+    scripts:
+      - name: Set up keystore
+        script: |
+          echo $FCI_KEYSTORE_BASE64 | base64 --decode > /tmp/keystore.jks
+      - name: Build Android APK
+        script: |
+          flutter pub get
+          flutter build apk \
+            --release \
+            --split-per-abi
+      - name: Build Android AAB
+        script: |
+          flutter build appbundle \
+            --release \
+            -Pandroid-signing-key-store=$ANDROID_KEYSTORE_PATH \
+            -Pandroid-signing-key-store-password=$ANDROID_KEYSTORE_PASSWORD \
+            -Pandroid-signing-key-password=$ANDROID_KEY_PASSWORD \
+            -Pandroid-signing-key-alias=$ANDROID_KEY_ALIAS
+    artifacts:
+      - build/app/outputs/apk/release/*.apk
+      - build/app/outputs/bundle/release/app-release.aab
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+
+  ios-release:
+    name: iOS Release
+    max_build_duration: 120
+    environment:
+      ios_signing:
+        - newlife_ios_cert
+      vars:
+        BUNDLE_ID: "com.newlifechurch.app"
+      flutter: stable
+      xcode: latest
+    triggering:
+      events:
+        - push
+      branch:
+        pattern: 'release|main'
+    scripts:
+      - name: Update iOS build version
+        script: |
+          BUILD_NUMBER=$(grep "version:" pubspec.yaml | sed 's/.*+//')
+          echo "Extracted build number: $BUILD_NUMBER"
+          python3 << 'EOF'
+          import plistlib
+          import os
+          
+          build_num = os.environ.get('BUILD_NUMBER', '17')
+          plist_path = 'ios/Runner/Info.plist'
+          
+          with open(plist_path, 'rb') as f:
+              plist = plistlib.load(f)
+          
+          plist['CFBundleVersion'] = build_num
+          print(f"Set CFBundleVersion to {build_num}")
+          
+          with open(plist_path, 'wb') as f:
+              plistlib.dump(plist, f)
+          
+          print("Info.plist updated successfully")
+          EOF
+      - name: Verify iOS build version
+        script: |
+          python3 << 'EOF'
+          import plistlib
+          
+          plist_path = 'ios/Runner/Info.plist'
+          with open(plist_path, 'rb') as f:
+              plist = plistlib.load(f)
+          
+          print(f"CFBundleVersion: {plist.get('CFBundleVersion', 'NOT FOUND')}")
+          EOF
+      - name: Install dependencies
+        script: |
+          flutter pub get
+          cd ios && pod install --repo-update && cd ..
+      - name: Build iOS
+        script: |
+          flutter build ios \
+            --release \
+            --no-codesign
+      - name: Package for App Store
+        script: |
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -config Release.xcconfig \
+            -derivedDataPath build/ios_build \
+            -allowProvisioningUpdates \
+            -archivePath build/ios_build/Runner.xcarchive \
+            archive
+          cd ..
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - ios/build/ios_build/Runner.xcarchive
+    publishing:
+      app_store_connect:
+        apple_id: $APPLE_ID
+        password: $APP_SPECIFIC_PASSWORD
+        app_id: $APP_ID
+        submit_for_review: false
+
+  web-release:
+    name: Web Release
+    max_build_duration: 60
+    environment:
+      flutter: stable
+    triggering:
+      events:
+        - push
+      branch:
+        pattern: 'release|main'
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Build web
+        script: |
+          flutter build web \
+            --release \
+            --dart-define=FLUTTER_WEB_USE_SKIA=true
+    artifacts:
+      - build/web/**
+    publishing:
+      firebase:
+        firebase_token: $FIREBASE_TOKEN
+        project_id: $FIREBASE_PROJECT_ID
