@@ -115,24 +115,23 @@ class _DevotionDetailScreenState extends State<DevotionDetailScreen> {
                 submittedDate: DateTime.now().toString(),
               );
 
-              if (mounted) {
-                Navigator.pop(context); // Close loading dialog
+              if (!context.mounted) return;
+              Navigator.pop(context); // Close loading dialog
 
-                if (success) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('✅ Devotion sent successfully to your email!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('⚠️ Could not send devotion. Please try again or contact us.'),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
-                }
+              if (success) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('✅ Devotion sent successfully to your email!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('⚠️ Could not send devotion. Please try again or contact us.'),
+                    backgroundColor: Colors.orange,
+                  ),
+                );
               }
             },
             child: const Text('Send'),
@@ -244,10 +243,10 @@ class _DevotionDetailScreenState extends State<DevotionDetailScreen> {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withOpacity(0.1),
+            color: AppTheme.primaryColor.withAlpha(26),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: AppTheme.primaryColor.withOpacity(0.3),
+              color: AppTheme.primaryColor.withAlpha(77),
               width: 1,
             ),
           ),
@@ -488,7 +487,7 @@ class _DevotionDetailScreenState extends State<DevotionDetailScreen> {
                       devotion.id,
                       _reflectionController.text,
                     );
-                    if (!mounted) return;
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('✅ Reflection saved!'),
@@ -550,7 +549,7 @@ class _DevotionDetailScreenState extends State<DevotionDetailScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withAlpha(26),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -591,7 +590,7 @@ class _DevotionDetailScreenState extends State<DevotionDetailScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black.withAlpha(26),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),

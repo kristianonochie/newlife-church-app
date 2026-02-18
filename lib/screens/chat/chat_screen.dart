@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -66,7 +67,9 @@ class _ChatScreenState extends State<ChatScreen> {
         await prefs.setString('chat_user_name', _userName!);
       }
     } catch (e) {
-      print('Error saving chat session: $e');
+      if (kDebugMode) {
+        debugPrint('Error saving chat session: $e');
+      }
     }
   }
 
@@ -223,10 +226,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
     // Clear chat and go home
     chat.clear();
-    if (mounted) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      context.goNamed('home');
-    }
+    if (!mounted) return;
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (!mounted) return;
+    context.goNamed('home');
   }
 
   @override

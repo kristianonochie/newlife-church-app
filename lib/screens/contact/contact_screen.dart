@@ -61,6 +61,7 @@ class _ContactScreenState extends State<ContactScreen> {
           fromEmail: email,
           message: message,
         );
+        if (!mounted) return;
         if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Message sent successfully!')),
@@ -74,6 +75,7 @@ class _ContactScreenState extends State<ContactScreen> {
       } catch (e) {
         errorMsg = 'Error: ${e.toString()}';
       }
+      if (!mounted) return;
       if (errorMsg != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(errorMsg)),

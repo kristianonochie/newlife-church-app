@@ -21,7 +21,7 @@ class AppDrawer extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   AppTheme.primaryColor,
-                  AppTheme.primaryColor.withOpacity(0.8),
+                  AppTheme.primaryColor.withAlpha(204),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -214,7 +214,7 @@ class AppDrawer extends StatelessWidget {
         ),
       ),
       selected: isSelected,
-      selectedTileColor: AppTheme.primaryColor.withOpacity(0.1),
+      selectedTileColor: AppTheme.primaryColor.withAlpha(26),
       onTap: () {
         Navigator.pop(context); // Close drawer
         if (!isSelected) {

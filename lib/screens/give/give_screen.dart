@@ -1,16 +1,10 @@
-// ...existing code for GiveScreen restored...
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_bottom_nav.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/church_app_bar.dart';
-import '../../widgets/app_footer.dart';
 import '../../widgets/floating_chat_button.dart';
-import '../chat/chat_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'dart:ui' as ui; // Unused import removed
-// No need for PayPalDonateButton, revert to url_launcher for all platforms
 
 class GiveScreen extends StatefulWidget {
   const GiveScreen({super.key});
@@ -20,49 +14,30 @@ class GiveScreen extends StatefulWidget {
 }
 
 class _GiveScreenState extends State<GiveScreen> {
-  // bool _isProcessing = false; // Unused field removed
-
-  Future<void> _openPayPalDonation(
-      BuildContext context, String givingType) async {
-    final url =
-        'https://www.paypal.com/donate?hosted_button_id=V56HCXFE46U5E&custom=${Uri.encodeComponent(givingType)}';
-    final uri = Uri.parse(url);
-    // Always open in external browser on iOS for App Store compliance
-    if (kIsWeb) {
+  // All donations handled via website - App Store compliance
+  
+  Future<void> _openDonationWebsite(BuildContext context) async {
+    try {
+      final uri = Uri.parse('https://www.newlifecc.co.uk/give');
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open PayPal.')),
-        );
+        if (!context.mounted) return;
+        _showError(context, 'Could not open donation page');
       }
-    } else {
-      // On iOS and Android, open in external browser only
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open PayPal.')),
-        );
-      }
+    } catch (e) {
+      if (!context.mounted) return;
+      _showError(context, 'Error: ${e.toString()}');
     }
   }
 
-  // This screen has been removed for App Store compliance.
-
-  String _getGivingDescription(String givingType) {
-    switch (givingType) {
-      case 'Offering':
-        return 'Give a financial offering to support the ministry and work of New Life Community Church.';
-      case 'Tithe':
-        return 'Return your tithe (10% of income) to support the church\'s mission and community outreach.';
-      case 'Support':
-        return 'Provide support to help meet the needs of members and community in crisis or hardship.';
-      case 'First Fruits':
-        return 'Give the first portion of your increase as an act of faith and thanksgiving to God.';
-      default:
-        return '';
-    }
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red.shade700,
+      ),
+    );
   }
 
   @override
@@ -81,15 +56,12 @@ class _GiveScreenState extends State<GiveScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header section
               Container(
                 padding: EdgeInsets.all(isMobile ? 16 : 24),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  color: AppTheme.primaryColor.withAlpha(26),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: AppTheme.primaryColor.withOpacity(0.3),
-                  ),
+                  border: Border.all(color: AppTheme.primaryColor.withAlpha(77)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,11 +76,8 @@ class _GiveScreenState extends State<GiveScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Your generous giving helps us serve the community and advance the kingdom of God.',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      ),
+                      'Your generous giving helps us serve the community.',
+                      style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                     ),
                     const SizedBox(height: 12),
                     const Text(
@@ -123,71 +92,56 @@ class _GiveScreenState extends State<GiveScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Info text about PayPal redirection
               Container(
                 margin: const EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade50,
+                  color: Colors.blue.shade50,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange.shade200),
+                  border: Border.all(color: Colors.blue.shade200),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.info_outline,
-                        color: Colors.orange, size: 20),
+                    const Icon(Icons.info_outline, color: Colors.blue, size: 20),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'Donations are handled securely on our website. You will be redirected to your browser to complete your donation.',
-                        style: TextStyle(color: Colors.orange, fontSize: 14),
+                        'All donations are securely handled on our website.',
+                        style: TextStyle(color: Colors.blue.shade700, fontSize: 14),
                       ),
                     ),
                   ],
                 ),
               ),
-              // Giving options grid
-              GridView.count(
-                crossAxisCount: isMobile ? 1 : 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                childAspectRatio: isMobile ? 1.2 : 1.1,
-                children: [
-                  _buildGivingOption(
-                    context,
-                    icon: Icons.card_giftcard,
-                    title: 'Offering',
-                    description: 'Give an offering to support our ministry',
-                    color: Colors.amber,
-                  ),
-                  _buildGivingOption(
-                    context,
-                    icon: Icons.trending_up,
-                    title: 'Tithe',
-                    description: 'Return your 10% tithe to God\'s work',
-                    color: Colors.green,
-                  ),
-                  _buildGivingOption(
-                    context,
-                    icon: Icons.favorite,
-                    title: 'Support',
-                    description: 'Support those in need in our community',
-                    color: Colors.red,
-                  ),
-                  _buildGivingOption(
-                    context,
-                    icon: Icons.star,
-                    title: 'First Fruits',
-                    description: 'Give the first of your increase',
-                    color: Colors.blue,
-                  ),
-                ],
+              Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.favorite, size: 60, color: AppTheme.primaryColor),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Support Our Ministry',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Thank you for your generosity',
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: () => _openDonationWebsite(context),
+                      icon: const Icon(Icons.open_in_new),
+                      label: const Text('Donate on Website'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
-
-              // Info section
               Container(
                 padding: EdgeInsets.all(isMobile ? 16 : 24),
                 decoration: BoxDecoration(
@@ -199,171 +153,61 @@ class _GiveScreenState extends State<GiveScreen> {
                   children: [
                     const Text(
                       'Why Give?',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    _buildBulletPoint('Support ministry and outreach programs'),
-                    _buildBulletPoint('Help those in crisis and need'),
-                    _buildBulletPoint(
-                        'Invest in spiritual growth and discipleship'),
-                    _buildBulletPoint(
-                        'Advance the mission of New Life Community Church'),
+                    _buildBullet('Support ministry and outreach programs'),
+                    _buildBullet('Help those in crisis and need'),
+                    _buildBullet('Invest in spiritual growth'),
+                    _buildBullet('Advance the mission of NLCC'),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Contact info section
               Container(
                 padding: EdgeInsets.all(isMobile ? 16 : 24),
                 decoration: BoxDecoration(
-                  color: AppTheme.secondaryColor.withOpacity(0.1),
+                  color: AppTheme.secondaryColor.withAlpha(26),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: AppTheme.secondaryColor.withOpacity(0.3),
-                  ),
+                  border: Border.all(color: AppTheme.secondaryColor.withAlpha(77)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Need Help?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'For questions about giving, please contact us:',
+                      'For questions about giving, contact us:',
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      '📧 give@newlifecc.co.uk',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      '🌐 www.newlifecc.co.uk',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
+                    const Text('📧 give@newlifecc.co.uk', style: TextStyle(fontWeight: FontWeight.w500)),
                   ],
                 ),
               ),
-              const SizedBox(height: 32),
-
-              // Footer
-              const AppFooter(),
+              const SizedBox(height: 40),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const AppBottomNav(currentIndex: 7),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 5),
       floatingActionButton: FloatingChatButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (_) => const ChatScreen(role: 'Me'),
-          );
-        },
+        onPressed: () => Navigator.of(context).pushNamed('/nlcchat'),
       ),
     );
   }
 
-  Widget _buildGivingOption(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String description,
-    required Color color,
-  }) {
-    return GestureDetector(
-      onTap: () => _openPayPalDonation(context, title),
-      child: Card(
-        elevation: 4,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                color.withOpacity(0.1),
-                color.withOpacity(0.05),
-              ],
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    icon,
-                    size: 40,
-                    color: color,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () => _openPayPalDonation(context, title),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Give via PayPal'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBulletPoint(String text) {
+  Widget _buildBullet(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          const Icon(
-            Icons.check_circle,
-            size: 20,
-            color: AppTheme.primaryColor,
-          ),
+          const Icon(Icons.check_circle, size: 20, color: AppTheme.primaryColor),
           const SizedBox(width: 12),
-          Expanded(
-            child: Text(text),
-          ),
+          Expanded(child: Text(text)),
         ],
       ),
     );

@@ -22,7 +22,7 @@ class LiveWaitingScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  color: AppTheme.primaryColor.withAlpha(26),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(

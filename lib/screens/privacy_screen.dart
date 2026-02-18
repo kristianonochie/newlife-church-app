@@ -1,10 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../widgets/app_footer.dart';
 
 class PrivacyScreen extends StatelessWidget {
-  const PrivacyScreen({Key? key}) : super(key: key);
+  const PrivacyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,9 @@ class PrivacyScreen extends StatelessWidget {
           },
         ),
       ),
-          body: const SingleChildScrollView(
-            padding: EdgeInsets.all(24),
-            child: SelectableText(
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(24),
+        child: SelectableText(
               '''New Life Community Church, Tonyrefail is committed to safeguarding your privacy. Contact us at nlcctonyrefail@hotmail.com if you have any questions or problems regarding the use of your Personal Data and we will gladly assist you.
 
 By using this site or/and our services, you consent to the Processing of your Personal Data as described in this Privacy Policy.
@@ -163,12 +162,11 @@ Changes to this Privacy Policy
 We reserve the right to make change to this Privacy Policy.
 Last modification was made 23rd April 2019.
 
- 
-
-PB/DP 23/04/2019''',
-              style: TextStyle(fontSize: 16, color: Colors.black),
-            ),
-          ),
+PB/DP 23/04/2019
+''',
+          style: TextStyle(fontSize: 16, color: Colors.black),
+        ),
+      ),
     );
   }
 }

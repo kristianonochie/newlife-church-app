@@ -1,0 +1,118 @@
+00:00 +0: loading C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart
+00:00 +0: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVersion enum should have 6 versions
+00:00 +1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVersion enum should have correct abbreviations
+00:00 +2: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVersion enum should have correct full names
+00:00 +3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should serialize to JSON correctly
+00:00 +4: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should deserialize from JSON correctly
+00:00 +5: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should generate correct reference format
+00:00 +6: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should default to KJV version if not specified
+00:00 +7: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should handle missing JSON fields gracefully
+00:00 +8: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleVerse model should parse version correctly from abbreviation
+00:00 +9: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Initialization init() should initialize without errors
+00:00 +10: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Initialization init() should set default version to KJV
+00:00 +11: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Initialization init() should load saved version preference
+test/services/notification_service_test.dart:26:5: Error: Method not found: 'whenListen'.
+    whenListen(
+    ^^^^^^^^^^
+test/services/notification_service_test.dart:34:35: Error: Required named parameter 'carPlay' must be provided.
+        const NotificationSettings(
+                                  ^
+../../../AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.7.5/lib/src/notification_settings.dart:11:9: Context: Found this candidate, but the arguments don't match.
+  const NotificationSettings({
+        ^^^^^^^^^^^^^^^^^^^^
+00:00 +12: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Initialization should not reinitialize if already initialized
+00:00 +12 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Initialization should not reinitialize if already initialized [E]
+  Expected: BibleVersion:<BibleVersion.kjv>
+    Actual: BibleVersion:<BibleVersion.nlt>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test\services\bible_service_test.dart 162:9         main.<fn>.<fn>.<fn>
+  
+00:00 +12 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Version management availableVersions should return all 6 versions
+00:00 +13 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Version management setSelectedVersion should update current version
+00:00 +14 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Version management selected version should persist across instances
+00:00 +15 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Version management should handle all available versions
+00:00 +16 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return verse from offline cache
+00:00 +17 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return verse in selected version
+00:00 +18 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return verse in specific version when specified
+00:00 +19 -1: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +19 -2: loading C:/Users/Christian/Develop/projects/flutter_application_1/test/services/notification_service_test.dart [E]
+  Failed to load "C:/Users/Christian/Develop/projects/flutter_application_1/test/services/notification_service_test.dart":
+  Compilation failed for testPath=C:/Users/Christian/Develop/projects/flutter_application_1/test/services/notification_service_test.dart: test/services/notification_service_test.dart:26:5: Error: Method not found: 'whenListen'.
+      whenListen(
+      ^^^^^^^^^^
+  test/services/notification_service_test.dart:34:35: Error: Required named parameter 'carPlay' must be provided.
+          const NotificationSettings(
+                                    ^
+  ../../../AppData/Local/Pub/Cache/hosted/pub.dev/firebase_messaging_platform_interface-4.7.5/lib/src/notification_settings.dart:11:9: Context: Found this candidate, but the arguments don't match.
+    const NotificationSettings({
+          ^^^^^^^^^^^^^^^^^^^^
+  .
+00:00 +19 -3: loading C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 911:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 194:5      _RawReceivePort._handleMessage
+  
+00:00 +20 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +21 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +22 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +23 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +24 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +25 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +26 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +27 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +28 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +29 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +30 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +31 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +32 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +33 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +34 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +35 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +36 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +37 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +38 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +39 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +40 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should return null for non-existent verse
+00:00 +41 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should be case-insensitive
+00:00 +42 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getVerse should support multiple verse formats
+00:00 +43 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should find verses by book name
+00:00 +44 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should find verses by partial scripture reference
+00:00 +45 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should find verses by text content
+00:00 +46 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should return empty list for no matches
+00:00 +47 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should respect selected version in search
+00:00 +48 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService searchVerses should search specific version when specified
+00:00 +49 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Favorites management should toggle favorite status
+00:00 +50 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Favorites management should get favorites list
+00:00 +51 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Favorites management should persist favorites to SharedPreferences
+00:00 +52 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Favorites management should track favorites per version
+00:00 +53 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Favorites management should return empty favorites list initially
+00:00 +54 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getRandomVerse should return a random verse
+00:00 +55 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getRandomVerse should return verse in selected version
+00:00 +56 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService getRandomVerse should return different verses on multiple calls
+00:00 +57 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Offline functionality should work without internet connection
+00:00 +58 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Offline functionality offline cache should contain multiple versions
+00:00 +59 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Offline functionality should have different text for different versions
+00:00 +60 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Clear favorites should clear all favorites
+00:00 +61 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/services/bible_service_test.dart: BibleService Clear favorites should not affect verses after clearing favorites
+00:01 +62 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/widget_test.dart: (setUpAll)
+00:01 +62 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/widget_test.dart: App builds smoke test
+Firebase not available: [core/no-app] No Firebase App '[DEFAULT]' has been created - call Firebase.initializeApp()
+00:02 +63 -3: C:/Users/Christian/Develop/projects/flutter_application_1/test/widget_test.dart: (tearDownAll)
+00:02 +63 -3: Some tests failed.

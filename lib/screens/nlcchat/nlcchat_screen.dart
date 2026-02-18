@@ -91,7 +91,7 @@ class _NLCChatScreenState extends State<NLCChatScreen> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withAlpha(26),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../services/admin_service.dart';
@@ -135,7 +136,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
       });
     } catch (e) {
       setState(() => _isLoadingAnalytics = false);
-      print('Error loading analytics: $e');
+      if (kDebugMode) {
+        debugPrint('Error loading analytics: $e');
+      }
     }
   }
 
@@ -555,7 +558,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                   children: [
                     // Header
                     Card(
-                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      color: AppTheme.primaryColor.withAlpha(26),
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Row(
@@ -625,7 +628,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> with Single
                               ..._topics.map((topic) {
                                 return RadioListTile<String>(
                                   value: topic['value']!,
+                                  // ignore: deprecated_member_use
                                   groupValue: _selectedTopic,
+                                  // ignore: deprecated_member_use
                                   onChanged: _isLoading
                                       ? null
                                       : (value) {

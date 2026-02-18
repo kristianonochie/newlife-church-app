@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
@@ -56,7 +57,9 @@ class _WatchScreenState extends State<WatchScreen> {
   Future<void> _fetchYouTubeVideos() async {
     // Only fetch if API key is configured
     if (!_youtubeService.isConfigured) {
-      print('YouTube API key not configured. Using fallback videos.');
+      if (kDebugMode) {
+        debugPrint('YouTube API key not configured. Using fallback videos.');
+      }
       return;
     }
 
@@ -79,7 +82,9 @@ class _WatchScreenState extends State<WatchScreen> {
         _loadFallbackVideos();
       }
     } catch (e) {
-      print('Error fetching YouTube videos: $e');
+      if (kDebugMode) {
+        debugPrint('Error fetching YouTube videos: $e');
+      }
       setState(() {
         _fetchingVideos = false;
       });
@@ -199,7 +204,6 @@ class _WatchScreenState extends State<WatchScreen> {
 
     final pageTitle = _content['page_title'] ?? 'Watch Services';
     final introText = _content['intro_text'] ?? 'Watch our live services and past sermons';
-    final liveStreamUrl = _content['live_stream_url'] ?? 'https://www.youtube.com/@newlifecommunitychurchtony3427/live';
     final youtubeChannelUrl = _content['youtube_channel_url'] ?? 'https://www.youtube.com/@newlifecommunitychurchtony3427';
 
     return Scaffold(
@@ -406,7 +410,7 @@ class _WatchScreenState extends State<WatchScreen> {
                                   width: 60,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    color: AppTheme.primaryColor.withOpacity(0.1),
+                                    color: AppTheme.primaryColor.withAlpha(26),
                                     borderRadius: BorderRadius.circular(8),
                                     image: video.thumbnail.isNotEmpty
                                         ? DecorationImage(

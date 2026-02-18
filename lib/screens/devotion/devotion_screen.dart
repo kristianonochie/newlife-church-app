@@ -93,7 +93,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                     gradient: LinearGradient(
                       colors: [
                         AppTheme.primaryColor,
-                        AppTheme.primaryColor.withOpacity(0.8),
+                        AppTheme.primaryColor.withAlpha(204),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -128,10 +128,10 @@ class _DevotionScreenState extends State<DevotionScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.15),
+                          color: Colors.white.withAlpha(38),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withAlpha(77),
                             width: 1,
                           ),
                         ),
@@ -155,7 +155,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
-                                    color: Colors.white.withOpacity(0.95),
+                                    color: Colors.white.withAlpha(242),
                                     height: 1.6,
                                   ),
                             ),
@@ -218,7 +218,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                                   color: AppTheme.primaryColor,
                                   width: 1.5,
                                 ),
-                                color: AppTheme.primaryColor.withOpacity(0.08),
+                                color: AppTheme.primaryColor.withAlpha(20),
                               ),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.symmetric(
@@ -283,10 +283,10 @@ class _DevotionScreenState extends State<DevotionScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    color: AppTheme.primaryColor.withAlpha(26),
                     border: Border(
                       bottom: BorderSide(
-                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        color: AppTheme.primaryColor.withAlpha(77),
                         width: 1,
                       ),
                     ),
@@ -434,7 +434,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black.withAlpha(26),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
@@ -475,7 +475,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black.withAlpha(26),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
